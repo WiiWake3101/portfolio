@@ -147,10 +147,13 @@ export default function Home() {
             {/* B.Tech Card */}
             <div className="flex flex-col items-center bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-xl p-6 text-center hover:scale-105 transition-transform duration-200">
               <a href="https://www.srmist.edu.in/" target="_blank" rel="noopener noreferrer">
-                <img
+                <Image
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwyYOZllJlZZM8VeKPrGcCWtjc6nBW1sg5mQ&s"
                   alt="SRMIST Logo"
+                  width={64}
+                  height={64}
                   className="w-16 h-16 object-contain mx-auto mb-3 rounded-full bg-white/20"
+                  unoptimized
                 />
               </a>
               <h3 className="text-xl font-semibold mb-1">B.Tech in Computer Science and Engineering</h3>
@@ -163,10 +166,13 @@ export default function Home() {
             {/* 12th Grade Card */}
             <div className="flex flex-col items-center bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-xl p-6 text-center hover:scale-105 transition-transform duration-200">
               <a href="https://www.kpcvs.ac.in/" target="_blank" rel="noopener noreferrer">
-                <img
+                <Image
                   src="https://www.chennaischooldirectory.com/assets/upload/profileimg/PRFIMGUSR11581671789372.png"
                   alt="KPCVS Logo"
+                  width={64}
+                  height={64}
                   className="w-16 h-16 object-contain mx-auto mb-3 rounded-full bg-white/20"
+                  unoptimized
                 />
               </a>
               <h3 className="text-xl font-semibold mb-1">12th Grade</h3>
@@ -179,10 +185,13 @@ export default function Home() {
             {/* 10th Grade Card */}
             <div className="flex flex-col items-center bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-xl p-6 text-center hover:scale-105 transition-transform duration-200">
               <a href="https://www.npschennai.com/" target="_blank" rel="noopener noreferrer">
-                <img
+                <Image
                   src="https://www.nps.acadamis.in/assets/school_logos/national-public-school-gopalapuram_logo_1634878530.png"
                   alt="NPS Logo"
+                  width={64}
+                  height={64}
                   className="w-16 h-16 object-contain mx-auto mb-3 rounded-full bg-white/20"
+                  unoptimized
                 />
               </a>
               <h3 className="text-xl font-semibold mb-1">10th Grade</h3>
@@ -256,10 +265,13 @@ export default function Home() {
             {/* Alexa Developers SRM Club Card */}
             <div className="flex flex-col bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-xl p-6 w-full md:w-1/2 hover:scale-[1.03] transition-transform duration-200">
               <div className="flex items-center gap-4 mb-3">
-                <img
+                <Image
                   src="https://media.licdn.com/dms/image/v2/C560BAQHIcf-sado1eg/company-logo_200_200/company-logo_200_200/0/1631097727005/alexa_developers_srm_logo?e=1756944000&v=beta&t=mmYboS34pfgAdQil3Kirih6Z8DYs7AaLpBfq5raDA-w"
                   alt="Alexa Developers SRM Logo"
+                  width={56}
+                  height={56}
                   className="w-14 h-14 rounded-full bg-white/20 object-contain"
+                  unoptimized
                 />
                 <div>
                   <div className="font-semibold text-lg">Alexa Developers SRM</div>
