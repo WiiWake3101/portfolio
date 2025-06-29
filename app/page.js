@@ -275,7 +275,6 @@ export default function Home() {
                 />
                 <div>
                   <div className="font-semibold text-lg">Alexa Developers SRM</div>
-                  <div className="text-xs text-gray-300">1 yr 10 mos</div>
                 </div>
               </div>
               {/* Creative Lead */}
