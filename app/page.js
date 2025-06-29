@@ -36,7 +36,7 @@ export default function Home() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [sectionIds]);
 
   return (
     <div className="relative pt-35 px-8 sm:px-20 z-10">
@@ -73,7 +73,7 @@ export default function Home() {
             transition={{ duration: 0.8, ease: 'easeOut' }}
             className="w-full md:w-1/2 bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl rounded-2xl p-6 sm:p-10 text-white text-center md:text-left"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Hi, I'm Vivek 👋</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Hi, I&apos;m Vivek 👋</h1>
             <div className="mt-4 text-base sm:text-lg text-white">
               <span className="block mt-2">
                 I&apos;m a Computer Science and Engineering student passionate about
