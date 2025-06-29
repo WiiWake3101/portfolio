@@ -76,7 +76,7 @@ export default function Home() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Hi, I'm Vivek 👋</h1>
             <div className="mt-4 text-base sm:text-lg text-white">
               <span className="block mt-2">
-                I'm a Computer Science and Engineering student passionate about
+                I&apos;m a Computer Science and Engineering student passionate about
                 <span className="font-semibold text-cyan-400"> Embedded AI</span>,
                 <span className="font-semibold text-cyan-400"> Embedded Systems</span>,
                 and
