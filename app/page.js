@@ -217,6 +217,16 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Samsung Internship Card */}
             <div className="flex flex-col bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-xl p-6 hover:scale-[1.03] transition-transform duration-200">
+              {/* Company Logo */}
+              <div className="flex justify-center mb-3">
+                <Image
+                  src="/samsungrndindiabangalore_logo.jpg"
+                  alt="Samsung Logo"
+                  width={56}
+                  height={56}
+                  className="w-14 h-14 object-contain rounded-full bg-white/20"
+                />
+              </div>
               <div className="flex items-center gap-3 mb-2">
                 <span className="inline-block bg-indigo-700/30 text-indigo-300 px-2 py-1 rounded text-xs font-mono">Mar 2024 – Dec 2024</span>
                 <span className="inline-block bg-orange-700/30 text-orange-300 px-2 py-1 rounded text-xs font-mono">Internship</span>
@@ -234,6 +244,17 @@ export default function Home() {
             </div>
             {/* Beyond Pages Trust Internship Card */}
             <div className="flex flex-col bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-xl p-6 hover:scale-[1.03] transition-transform duration-200">
+              {/* Company Logo */}
+              <div className="flex justify-center mb-3">
+                <Image
+                  src="https://media.licdn.com/dms/image/v2/D560BAQGny7Rg76MhCw/company-logo_200_200/company-logo_200_200/0/1718351472437?e=1756944000&v=beta&t=_ahDF1hKuyMXLFRbLGBk_7FVBKIQXT4G7859SPt6b_0"
+                  alt="Beyond Pages Trust Logo"
+                  width={56}
+                  height={56}
+                  className="w-14 h-14 object-contain rounded-full bg-white/20"
+                  unoptimized
+                />
+              </div>
               <div className="flex items-center gap-3 mb-2">
                 <span className="inline-block bg-indigo-700/30 text-indigo-300 px-2 py-1 rounded text-xs font-mono">Jun 2024 – Jul 2024</span>
                 <span className="inline-block bg-orange-700/30 text-orange-300 px-2 py-1 rounded text-xs font-mono">Internship</span>
@@ -336,21 +357,43 @@ export default function Home() {
 
             {/* Undergraduate Project */}
             <h3 className="text-2xl font-semibold mb-4">Undergraduate Projects</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
               {/* Embedded ML for Early Heart Attack Prediction */}
-              <div className="flex flex-col bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-xl p-6 hover:scale-[1.03] transition-transform duration-200">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="inline-block bg-blue-700/30 text-blue-300 px-2 py-1 rounded text-xs font-mono">Jan 2025 – May 2025</span>
-                  <span className="inline-block bg-purple-700/30 text-purple-300 px-2 py-1 rounded text-xs font-mono">Undergraduate</span>
+              <div className="flex flex-col md:flex-row bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-xl p-6 hover:scale-[1.03] transition-transform duration-200">
+                {/* Project Image Side (left on desktop, above on mobile) */}
+                <div className="flex-shrink-0 flex justify-center items-center mb-4 md:mb-0 md:mr-8">
+                  <Image
+                    src="/ug_project.jpg"
+                    alt="Embedded ML for Early Heart Attack Prediction"
+                    width={420}
+                    height={280}
+                    className="rounded-xl object-cover shadow-md w-[320px] h-[180px] md:w-[420px] md:h-[280px]"
+                  />
                 </div>
-                <h4 className="text-lg font-semibold mb-1">Embedded ML for Early Heart Attack Prediction</h4>
-                <p className="text-sm text-gray-200 italic mb-1">Undergraduate Project</p>
-                <ul className="list-disc list-inside text-sm text-gray-200 space-y-1 mb-2">
-                  <li>Built a real-time heart attack prediction system using Arduino Nano BLE 33 Sense Rev 2 and Embedded AI.</li>
-                  <li>Integrated MAX30102, TMP117, and GSR sensors to collect physiological data.</li>
-                  <li>Simulated datasets using Python, NumPy, and Pandas; visualized data using Matplotlib.</li>
-                  <li>Trained a binary classification model in TensorFlow Lite; achieved 96% accuracy.</li>
-                </ul>
+                <div className="flex-1 flex flex-col justify-center">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="inline-block bg-blue-700/30 text-blue-300 px-2 py-1 rounded text-xs font-mono">Jan 2025 – May 2025</span>
+                    <span className="inline-block bg-purple-700/30 text-purple-300 px-2 py-1 rounded text-xs font-mono">Undergraduate</span>
+                    {/* GitHub Button */}
+                    <a
+                      href="https://github.com/YOUR_GITHUB_REPO"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-auto inline-flex items-center px-3 py-1 bg-gray-800 text-white text-xs rounded hover:bg-gray-700 transition"
+                    >
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.45.11-3.02 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.99 0 1.99.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.57.23 2.73.11 3.02.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.7.42.36.79 1.09.79 2.2 0 1.59-.01 2.87-.01 3.26 0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z"/></svg>
+                      GitHub
+                    </a>
+                  </div>
+                  <h4 className="text-lg font-semibold mb-1">Embedded ML for Early Heart Attack Prediction</h4>
+                  <p className="text-sm text-gray-200 italic mb-1">Undergraduate Project</p>
+                  <ul className="list-disc list-inside text-sm text-gray-200 space-y-1 mb-2">
+                    <li>Built a real-time heart attack prediction system using Arduino Nano BLE 33 Sense Rev 2 and Embedded AI.</li>
+                    <li>Integrated MAX30102, TMP117, and GSR sensors to collect physiological data.</li>
+                    <li>Simulated datasets using Python, NumPy, and Pandas; visualized data using Matplotlib.</li>
+                    <li>Trained a binary classification model in TensorFlow Lite; achieved 96% accuracy.</li>
+                  </ul>
+                </div>
               </div>
             </div>
 
@@ -396,6 +439,16 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2">
                     <span className="inline-block bg-cyan-700/30 text-cyan-300 px-2 py-1 rounded text-xs font-mono">Mar 2024 – Apr 2024</span>
                     <span className="inline-block bg-green-700/30 text-green-300 px-2 py-1 rounded text-xs font-mono">Course Project</span>
+                    {/* GitHub Button */}
+                    <a
+                      href="https://github.com/WiiWake3101/Robotic-Arm-ESP32"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-auto inline-flex items-center px-3 py-1 bg-gray-800 text-white text-xs rounded hover:bg-gray-700 transition"
+                    >
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.45.11-3.02 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.99 0 1.99.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.57.23 2.73.11 3.02.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.7.42.36.79 1.09.79 2.2 0 1.59-.01 2.87-.01 3.26 0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z"/></svg>
+                      GitHub
+                    </a>
                   </div>
                   <h4 className="text-lg font-semibold mb-1">Robotic Arm using ESP32</h4>
                   <ul className="list-disc list-inside text-sm text-gray-200 space-y-1 mb-2">
@@ -407,6 +460,16 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2">
                     <span className="inline-block bg-cyan-700/30 text-cyan-300 px-2 py-1 rounded text-xs font-mono">Jan 2024 – Apr 2024</span>
                     <span className="inline-block bg-green-700/30 text-green-300 px-2 py-1 rounded text-xs font-mono">Course Project</span>
+                    {/* GitHub Button */}
+                    <a
+                      href="https://github.com/WiiWake3101/Road-Damage-Detection-using-Detectron2"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-auto inline-flex items-center px-3 py-1 bg-gray-800 text-white text-xs rounded hover:bg-gray-700 transition"
+                    >
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.45.11-3.02 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.99 0 1.99.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.57.23 2.73.11 3.02.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.7.42.36.79 1.09.79 2.2 0 1.59-.01 2.87-.01 3.26 0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z"/></svg>
+                      GitHub
+                    </a>
                   </div>
                   <h4 className="text-lg font-semibold mb-1">Road Damage Detection using Detectron2</h4>
                   <ul className="list-disc list-inside text-sm text-gray-200 space-y-1 mb-2">
@@ -419,6 +482,16 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2">
                     <span className="inline-block bg-cyan-700/30 text-cyan-300 px-2 py-1 rounded text-xs font-mono">May 2024 – Apr 2024</span>
                     <span className="inline-block bg-green-700/30 text-green-300 px-2 py-1 rounded text-xs font-mono">Course Project</span>
+                    {/* GitHub Button */}
+                    <a
+                      href="https://github.com/WiiWake3101/Beyond-Pages-Trust"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-auto inline-flex items-center px-3 py-1 bg-gray-800 text-white text-xs rounded hover:bg-gray-700 transition"
+                    >
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.45.11-3.02 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.99 0 1.99.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.57.23 2.73.11 3.02.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.7.42.36.79 1.09.79 2.2 0 1.59-.01 2.87-.01 3.26 0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z"/></svg>
+                      GitHub
+                    </a>
                   </div>
                   <h4 className="text-lg font-semibold mb-1">Beyond Pages Trust Website</h4>
                   <ul className="list-disc list-inside text-sm text-gray-200 space-y-1 mb-2">
@@ -430,6 +503,16 @@ export default function Home() {
                   <div className="flex items-center gap-3 mb-2">
                     <span className="inline-block bg-cyan-700/30 text-cyan-300 px-2 py-1 rounded text-xs font-mono">Jan 2024 – Apr 2024</span>
                     <span className="inline-block bg-green-700/30 text-green-300 px-2 py-1 rounded text-xs font-mono">Course Project</span>
+                    {/* GitHub Button */}
+                    <a
+                      href="https://github.com/WiiWake3101/Blog-App"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-auto inline-flex items-center px-3 py-1 bg-gray-800 text-white text-xs rounded hover:bg-gray-700 transition"
+                    >
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.45.11-3.02 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.99 0 1.99.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.57.23 2.73.11 3.02.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.7.42.36.79 1.09.79 2.2 0 1.59-.01 2.87-.01 3.26 0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z"/></svg>
+                      GitHub
+                    </a>
                   </div>
                   <h4 className="text-lg font-semibold mb-1">Blog App</h4>
                   <ul className="list-disc list-inside text-sm text-gray-200 space-y-1 mb-2">
@@ -459,9 +542,13 @@ export default function Home() {
                 org: 'GitHub',
                 date: 'Feb 2025',
                 icon: (
-                  <svg className="w-6 h-6 text-gray-200" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.66-.22.66-.48 0-.24-.01-.87-.01-1.7-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.1-1.47-1.1-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.8c.85.004 1.71.12 2.51.35 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.85 0 1.33-.01 2.4-.01 2.73 0 .27.16.58.67.48A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z"/>
-                  </svg>
+                  <Image
+                    src="/GitHub.png"
+                    alt="GitHub Foundation Certificate"
+                    width={48}
+                    height={48}
+                    className="rounded shadow-md object-contain"
+                  />
                 ),
                 color: "from-gray-700 to-gray-900"
               },
@@ -470,9 +557,13 @@ export default function Home() {
                 org: 'Cisco Networking Academy',
                 date: 'Sep 2024',
                 icon: (
-                  <svg className="w-6 h-6 text-cyan-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path d="M12 20v-6m0 0V4m0 10l3-3m-3 3l-3-3" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <Image
+                    src="/networking_badge.jpg"
+                    alt="Cisco Networking Basics Certificate"
+                    width={48}
+                    height={48}
+                    className="rounded shadow-md object-contain"
+                  />
                 ),
                 color: "from-cyan-700 to-cyan-900"
               },
@@ -481,10 +572,13 @@ export default function Home() {
                 org: 'Cisco Networking Academy',
                 date: 'Mar 2024',
                 icon: (
-                  <svg className="w-6 h-6 text-green-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-                    <path d="M8 12h8M12 8v8" stroke="currentColor" strokeWidth="2"/>
-                  </svg>
+                  <Image
+                    src="/OS_badge.png"
+                    alt="Cisco OS Basics Certificate"
+                    width={48}
+                    height={48}
+                    className="rounded shadow-md object-contain"
+                  />
                 ),
                 color: "from-green-700 to-green-900"
               },
@@ -493,10 +587,13 @@ export default function Home() {
                 org: 'Cisco Networking Academy',
                 date: 'Mar 2024',
                 icon: (
-                  <svg className="w-6 h-6 text-blue-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" />
-                    <circle cx="12" cy="12" r="4" />
-                  </svg>
+                  <Image
+                    src="/Intro2IOT.png"
+                    alt="Cisco IoT Certificate"
+                    width={48}
+                    height={48}
+                    className="rounded shadow-md object-contain"
+                  />
                 ),
                 color: "from-blue-700 to-blue-900"
               },
@@ -505,10 +602,13 @@ export default function Home() {
                 org: 'IIT Madras (NPTEL)',
                 date: 'Oct 2023',
                 icon: (
-                  <svg className="w-6 h-6 text-yellow-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <rect x="4" y="4" width="16" height="16" rx="2"/>
-                    <path d="M8 8h8v8H8z"/>
-                  </svg>
+                  <Image
+                    src="/nptel.png"
+                    alt="IIT Madras Computer Architecture Certificate"
+                    width={48}
+                    height={48}
+                    className="rounded shadow-md object-contain"
+                  />
                 ),
                 color: "from-yellow-700 to-yellow-900"
               },
@@ -517,9 +617,13 @@ export default function Home() {
                 org: 'IIT Kharagpur (NPTEL)',
                 date: 'Oct 2023',
                 icon: (
-                  <svg className="w-6 h-6 text-pink-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path d="M12 20v-6m0 0V4m0 10l3-3m-3 3l-3-3" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <Image
+                    src="/nptel.png"
+                    alt="IIT Kharagpur Java Certificate"
+                    width={48}
+                    height={48}
+                    className="rounded shadow-md object-contain"
+                  />
                 ),
                 color: "from-pink-700 to-pink-900"
               }
