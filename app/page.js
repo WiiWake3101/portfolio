@@ -361,13 +361,13 @@ export default function Home() {
               {/* Embedded ML for Early Heart Attack Prediction */}
               <div className="flex flex-col md:flex-row bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg rounded-xl p-6 hover:scale-[1.03] transition-transform duration-200">
                 {/* Project Image Side (left on desktop, above on mobile) */}
-                <div className="flex-shrink-0 flex justify-center items-center mb-4 md:mb-0 md:mr-8">
+                <div className="flex-shrink-0 flex justify-center items-center mb-4 md:mb-0 md:mr-8 w-full md:w-[420px]">
                   <Image
                     src="/ug_project.jpg"
                     alt="Embedded ML for Early Heart Attack Prediction"
                     width={420}
                     height={280}
-                    className="rounded-xl object-cover shadow-md w-[320px] h-[180px] md:w-[420px] md:h-[280px]"
+                    className="rounded-xl object-cover shadow-md w-full h-auto max-w-[420px] max-h-[280px]"
                   />
                 </div>
                 <div className="flex-1 flex flex-col justify-center">
@@ -376,7 +376,7 @@ export default function Home() {
                     <span className="inline-block bg-purple-700/30 text-purple-300 px-2 py-1 rounded text-xs font-mono">Undergraduate</span>
                     {/* GitHub Button */}
                     <a
-                      href="https://github.com/YOUR_GITHUB_REPO"
+                      href="https://github.com/IoT-Health-Monitoring-Devices-in-EV/Embedded-Machine-Learning-for-Early-Detection-of-Heart-Attack-Symptoms"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="ml-auto inline-flex items-center px-3 py-1 bg-gray-800 text-white text-xs rounded hover:bg-gray-700 transition"
