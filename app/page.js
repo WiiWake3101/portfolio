@@ -585,7 +585,7 @@ export default function Home() {
                 date: 'Mar 2024',
                 icon: (
                   <Image
-                    src="/networking_badge.png"
+                    src="/Intro2IOT.png"
                     alt="Cisco IoT Certificate"
                     width={48}
                     height={48}
