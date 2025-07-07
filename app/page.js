@@ -29,9 +29,6 @@ export default function Home() {
           currentSection = sectionIds[i];
         }
       }
-      // Highlight nav or update state here if needed
-      // Example: document.body.dataset.section = currentSection;
-      // Or trigger a callback to Navbar if you want to highlight active section
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -588,7 +585,7 @@ export default function Home() {
                 date: 'Mar 2024',
                 icon: (
                   <Image
-                    src="/Intro2IOT.png"
+                    src="/networking_badge.png"
                     alt="Cisco IoT Certificate"
                     width={48}
                     height={48}
@@ -835,6 +832,17 @@ export default function Home() {
                   required
                   className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
                   placeholder="you@email.com"
+                />
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-cyan-300 mb-1">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  pattern="[0-9+\-\s()]{7,}"
+                  className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                  placeholder="Your Phone Number"
                 />
               </div>
               <div>
