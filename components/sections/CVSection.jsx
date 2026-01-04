@@ -6,8 +6,8 @@ import { FaExpand, FaCompress } from 'react-icons/fa';
 export default function CVSection({ sectionRef }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   
-  // Use local PDF file from public folder with print and download disabled
-  const cvEmbedUrl = "/Vivek_CV.pdf#toolbar=0&navpanes=0&scrollbar=0";
+  // Use local PDF file from public folder with toolbar disabled but scrollbar enabled for mobile
+  const cvEmbedUrl = "/Vivek_CV.pdf#toolbar=0&navpanes=0";
 
   return (
     <motion.section
@@ -78,7 +78,8 @@ export default function CVSection({ sectionRef }) {
               title="Academic CV"
               loading="lazy"
               style={{
-                pointerEvents: 'auto'
+                pointerEvents: 'auto',
+                overflow: 'auto'
               }}
             />
             

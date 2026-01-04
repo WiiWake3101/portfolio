@@ -60,12 +60,13 @@ export default function ClubExperienceSection() {
 					viewport={{ once: true }}
 					className="flex items-center justify-center gap-4 mb-10"
 				>
-					<div className="w-20 h-20 relative rounded-full overflow-hidden border-2 border-cyan-500/30">
+					<div className="w-20 h-20 min-w-[80px] min-h-[80px] relative rounded-full overflow-hidden border-2 border-cyan-500/30 flex-shrink-0">
 						<Image
 							src="/Alexa Developers SRM.png"
 							alt="Alexa Developers SRM"
 							fill
 							className="object-cover"
+							sizes="80px"
 						/>
 					</div>
 					<div>

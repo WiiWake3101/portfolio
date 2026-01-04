@@ -7,13 +7,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{
-        minHeight: '100vh',
-        margin: 0,
-        background: 'linear-gradient(to right, #000428, #004e92)',
-        color: 'white',
-        fontFamily: 'sans-serif'
-      }}>
+      <body 
+        className="min-h-screen m-0 bg-gradient-to-r from-[#000428] to-[#004e92] text-white font-sans"
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>
