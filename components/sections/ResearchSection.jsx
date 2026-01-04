@@ -7,7 +7,7 @@ export default function ResearchSection({ sectionRef }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   
   // Use local PDF file from public folder with toolbar disabled but scrollbar enabled for mobile
-  const researchPdfUrl = "/research_paper.pdf#toolbar=0&navpanes=0&scrollbar=0";
+  const researchPdfUrl = "/research_paper.pdf#toolbar=0&navpanes=0";
 
   return (
     <motion.section
@@ -140,8 +140,7 @@ export default function ResearchSection({ sectionRef }) {
                 title="Research Paper"
                 loading="lazy"
                 style={{
-                  pointerEvents: 'auto',
-                  overflow: 'auto'
+                  pointerEvents: 'auto'
                 }}
               />
               

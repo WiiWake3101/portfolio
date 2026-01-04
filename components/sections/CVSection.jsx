@@ -78,8 +78,7 @@ export default function CVSection({ sectionRef }) {
               title="Academic CV"
               loading="lazy"
               style={{
-                pointerEvents: 'auto',
-                overflow: 'auto'
+                pointerEvents: 'auto'
               }}
             />
             
