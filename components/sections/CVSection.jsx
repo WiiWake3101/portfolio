@@ -1,13 +1,23 @@
 'use client';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { FaExpand, FaCompress } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
+import { FaExpand, FaCompress, FaDownload, FaExternalLinkAlt } from 'react-icons/fa';
 
 export default function CVSection({ sectionRef }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
-  // Use local PDF file from public folder with toolbar disabled but scrollbar enabled for mobile
-  const cvEmbedUrl = "/Vivek_CV.pdf#toolbar=0&navpanes=0";
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
+  const cvEmbedUrl = "/Vivek_CV.pdf#toolbar=0&navpanes=0&view=FitH";
+  const cvDirectUrl = "/Vivek_CV.pdf";
 
   return (
     <motion.section
@@ -45,15 +55,42 @@ export default function CVSection({ sectionRef }) {
             </div>
             
             <div className="flex items-center gap-2">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => setIsFullscreen(!isFullscreen)}
-                className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
-                title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
-              >
-                {isFullscreen ? <FaCompress className="w-4 h-4" /> : <FaExpand className="w-4 h-4" />}
-              </motion.button>
+              {isMobile && (
+                <>
+                  <motion.a
+                    href={cvDirectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="p-2 bg-blue-600 hover:bg-blue-500 rounded-lg transition-colors"
+                    title="Open in new tab"
+                  >
+                    <FaExternalLinkAlt className="w-4 h-4" />
+                  </motion.a>
+                  <motion.a
+                    href={cvDirectUrl}
+                    download="Vivek_CV.pdf"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="p-2 bg-green-600 hover:bg-green-500 rounded-lg transition-colors"
+                    title="Download PDF"
+                  >
+                    <FaDownload className="w-4 h-4" />
+                  </motion.a>
+                </>
+              )}
+              {!isMobile && (
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setIsFullscreen(!isFullscreen)}
+                  className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
+                  title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+                >
+                  {isFullscreen ? <FaCompress className="w-4 h-4" /> : <FaExpand className="w-4 h-4" />}
+                </motion.button>
+              )}
             </div>
           </div>
 
@@ -68,25 +105,65 @@ export default function CVSection({ sectionRef }) {
               </button>
             )}
             
-            <iframe
-              src={cvEmbedUrl}
-              className={`w-full border-0 ${
-                isFullscreen 
-                  ? 'h-screen' 
-                  : 'h-[500px] sm:h-[600px] lg:h-[800px]'
-              }`}
-              title="Academic CV"
-              loading="lazy"
-              style={{
-                pointerEvents: 'auto'
-              }}
-            />
+            {isMobile ? (
+              <div className="flex flex-col items-center justify-center p-8 min-h-[400px] space-y-6">
+                <div className="text-center space-y-4">
+                  <div className="w-20 h-20 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center">
+                    <FaDownload className="w-10 h-10 text-cyan-400" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">View My CV</h3>
+                  <p className="text-gray-400 max-w-md">
+                    For the best viewing experience on mobile, please open the PDF in a new tab or download it.
+                  </p>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+                  <motion.a
+                    href={cvDirectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex-1 py-3 px-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 rounded-xl font-semibold text-center flex items-center justify-center gap-2 transition-all"
+                  >
+                    <FaExternalLinkAlt /> Open PDF
+                  </motion.a>
+                  
+                  <motion.a
+                    href={cvDirectUrl}
+                    download="Vivek_CV.pdf"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex-1 py-3 px-6 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 rounded-xl font-semibold text-center flex items-center justify-center gap-2 transition-all"
+                  >
+                    <FaDownload /> Download
+                  </motion.a>
+                </div>
+              </div>
+            ) : (
+              <object
+                data={cvEmbedUrl}
+                type="application/pdf"
+                className={`w-full border-0 ${
+                  isFullscreen 
+                    ? 'h-screen' 
+                    : 'h-[500px] sm:h-[600px] lg:h-[800px]'
+                }`}
+              >
+                <iframe
+                  src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + cvDirectUrl)}&embedded=true`}
+                  className="w-full h-full border-0"
+                  title="Academic CV"
+                />
+              </object>
+            )}
             
-            {/* Overlay to prevent right-click */}
-            <div 
-              className="absolute inset-0 pointer-events-none"
-              onContextMenu={(e) => e.preventDefault()}
-            />
+            {!isMobile && (
+              <div 
+                className="absolute inset-0 pointer-events-none"
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            )}
           </div>
         </motion.div>
       </div>

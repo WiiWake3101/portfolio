@@ -96,7 +96,7 @@ export default function ContactSection() {
                     : '0 0 0px rgba(34, 211, 238, 0)'
                 }}
                 className="w-full px-5 py-3 rounded-xl bg-white/20 border-2 border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400 transition-all duration-300"
-                placeholder="John Doe"
+                placeholder="Vivek M G"
               />
             </motion.div>
 
