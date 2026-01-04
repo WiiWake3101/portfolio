@@ -12,6 +12,8 @@ import {
   FaBriefcase,
   FaTimes,
   FaWrench,
+  FaFileAlt,
+  FaFlask,
 } from 'react-icons/fa';
 
 /** Store the icon *component* so we can size it differently in desktop vs mobile */
@@ -20,8 +22,10 @@ const navLinks = [
   { href: '#education', icon: FaGraduationCap },
   { href: '#internships', icon: FaBriefcase },
   { href: '#projects', icon: FaLaptopCode },
+  { href: '#research', icon: FaFlask },
   { href: '#certifications', icon: FaCertificate },
   { href: '#Technical', icon: FaWrench },
+  { href: '#cv', icon: FaFileAlt },
   { href: '#awards', icon: FaAward },
   { href: '#languages', icon: FaLanguage },
 ];
