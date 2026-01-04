@@ -6,8 +6,10 @@ import { FaExpand, FaCompress, FaDownload, FaExternalLinkAlt } from 'react-icons
 export default function ResearchSection({ sectionRef }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   
   useEffect(() => {
+    setIsClient(true);
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
     };
@@ -119,7 +121,7 @@ export default function ResearchSection({ sectionRef }) {
               </div>
               
               <div className="flex items-center gap-2">
-                {isMobile && (
+                {isClient && isMobile && (
                   <>
                     <motion.a
                       href={researchDirectUrl}
@@ -144,7 +146,7 @@ export default function ResearchSection({ sectionRef }) {
                     </motion.a>
                   </>
                 )}
-                {!isMobile && (
+                {isClient && !isMobile && (
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -169,7 +171,7 @@ export default function ResearchSection({ sectionRef }) {
                 </button>
               )}
               
-              {isMobile ? (
+              {isClient && isMobile ? (
                 <div className="flex flex-col items-center justify-center p-8 min-h-[400px] space-y-6">
                   <div className="text-center space-y-4">
                     <div className="w-20 h-20 mx-auto bg-cyan-500/20 rounded-full flex items-center justify-center">
@@ -215,7 +217,7 @@ export default function ResearchSection({ sectionRef }) {
                   }`}
                 >
                   <iframe
-                    src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + researchDirectUrl)}&embedded=true`}
+                    src={isClient ? `https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + researchDirectUrl)}&embedded=true` : researchDirectUrl}
                     className="w-full h-full border-0"
                     title="Research Paper"
                   />
