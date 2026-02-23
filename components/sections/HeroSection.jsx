@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-const roles = ['Embedded AI Engineer', 'IoT Developer', 'Full Stack Developer', 'Hardware Hacker'];
+const roles = ['Embedded AI Engineer', 'IoT Developer', 'Full Stack Developer'];
 
 function TypewriterText({ texts }) {
   const [index, setIndex] = useState(0);
