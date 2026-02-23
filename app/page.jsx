@@ -1,4 +1,5 @@
 'use client';
+import { useRef } from 'react';
 import Navbar from '../components/Navbar';
 import HeroSection from '../components/sections/HeroSection';
 import EducationSection from '../components/sections/EducationSection';
@@ -8,69 +9,57 @@ import ProjectsSection from '../components/sections/ProjectsSection';
 import ResearchSection from '../components/sections/ResearchSection';
 import CertificationsSection from '../components/sections/CertificationsSection';
 import TechnicalSkillsSection from '../components/sections/TechnicalSkillsSection';
+import SkillsProficiencySection from '../components/sections/SkillsProficiencySection';
 import CVSection from '../components/sections/CVSection';
 import AwardsSection from '../components/sections/AwardsSection';
 import LanguagesSection from '../components/sections/LanguagesSection';
 import ContactSection from '../components/sections/ContactSection';
 import Footer from '../components/sections/Footer';
-import { motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
-import SkillsProficiencySection from '../components/sections/SkillsProficiencySection';
+import CyberpunkParticles from '../components/CyberpunkParticles';
+import CyberpunkCursor from '../components/CyberpunkCursor';
+import ScrollProgress from '../components/ScrollProgress';
 
 export default function Home() {
-  // Section scroll spy logic
-  const sectionIds = [
-    "home",
-    "education",
-    "internships",
-    "projects",
-    "research",
-    "certifications",
-    "Technical",
-    "skills-proficiency",
-    "cv",
-    "awards",
-    "languages"
-  ];
   const sectionRefs = useRef([]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 120; // adjust offset for navbar height
-      let currentSection = sectionIds[0];
-      for (let i = 0; i < sectionRefs.current.length; i++) {
-        const ref = sectionRefs.current[i];
-        if (ref && ref.offsetTop <= scrollPosition) {
-          currentSection = sectionIds[i];
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [sectionIds]);
-
   return (
-    <div className="relative pt-35 px-8 sm:px-20 z-10">
-      {/* Animated Background */}
-      <motion.div
+    <>
+      {/* ── Global cyberpunk layer (behind everything) ── */}
+      {/* Deep base */}
+      <div className="fixed inset-0 z-0" style={{ background: '#020408' }} />
+
+      {/* HUD grid */}
+      <div
         className="fixed inset-0 z-0 pointer-events-none"
-        initial={{ opacity: 0.7, backgroundPosition: '0% 50%' }}
-        animate={{ 
-          opacity: 1, 
-          backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] 
-        }}
-        transition={{ 
-          duration: 15, 
-          repeat: Infinity, 
-          ease: "linear" 
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(0,255,240,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,255,240,0.025) 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px',
         }}
       />
-      
-      {/* Main Content */}
-      <div className="relative z-10">
+
+      {/* Deep ambient glows */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute w-[700px] h-[700px] rounded-full -top-40 -left-40"
+          style={{ background: 'radial-gradient(circle, rgba(0,102,255,0.06) 0%, transparent 70%)', filter: 'blur(40px)' }} />
+        <div className="absolute w-[600px] h-[600px] rounded-full top-1/3 -right-40"
+          style={{ background: 'radial-gradient(circle, rgba(255,0,170,0.05) 0%, transparent 70%)', filter: 'blur(40px)' }} />
+        <div className="absolute w-[500px] h-[500px] rounded-full bottom-0 left-1/3"
+          style={{ background: 'radial-gradient(circle, rgba(0,255,240,0.04) 0%, transparent 70%)', filter: 'blur(40px)' }} />
+      </div>
+
+      {/* Neural network particles */}
+      <CyberpunkParticles />
+
+      {/* UI chrome */}
+      <ScrollProgress />
+      <CyberpunkCursor />
+
+      {/* ── Page content ── */}
+      <div className="relative z-10 pt-28 px-4 sm:px-8 lg:px-16 cursor-none">
         <Navbar />
-        
         <HeroSection sectionRef={el => sectionRefs.current[0] = el} />
         <EducationSection sectionRef={el => sectionRefs.current[1] = el} />
         <InternshipsSection sectionRef={el => sectionRefs.current[2] = el} />
@@ -86,6 +75,6 @@ export default function Home() {
         <ContactSection />
         <Footer />
       </div>
-    </div>
+    </>
   );
 }

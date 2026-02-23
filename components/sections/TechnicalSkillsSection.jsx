@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 const terminalLines = [
   { prompt: '$ cat skills.txt', delay: 0 },
-  { content: 'Operating Systems: Windows, Linux', type: 'output', delay: 0.5 },
+  { content: 'OS: Windows, Linux', type: 'output', delay: 0.5 },
   { content: 'Languages: C++, Python, JavaScript, Arduino C', type: 'output', delay: 1 },
   { content: 'Database & Server: MySQL, Supabase', type: 'output', delay: 1.5 },
   { content: 'Tools: VS Code, GitHub, Git, Figma', type: 'output', delay: 2 },
@@ -15,64 +15,43 @@ const terminalLines = [
 export default function TechnicalSkillsSection({ sectionRef }) {
   const [currentLine, setCurrentLine] = useState(0);
   const [currentText, setCurrentText] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
   const [completedLines, setCompletedLines] = useState([]);
   const [showCursor, setShowCursor] = useState(true);
   const [shouldRestart, setShouldRestart] = useState(false);
 
   useEffect(() => {
-    const cursorBlink = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 530);
-
-    return () => clearInterval(cursorBlink);
+    const iv = setInterval(() => setShowCursor(p => !p), 530);
+    return () => clearInterval(iv);
   }, []);
 
   useEffect(() => {
-    // Reset animation when shouldRestart changes
     if (shouldRestart) {
-      setCurrentLine(0);
-      setCompletedLines([]);
-      setCurrentText('');
-      setShouldRestart(false);
+      setCurrentLine(0); setCompletedLines([]); setCurrentText(''); setShouldRestart(false);
     }
   }, [shouldRestart]);
 
   useEffect(() => {
     if (currentLine >= terminalLines.length) {
-      // Wait 3 seconds after completion, then restart
-      const restartTimeout = setTimeout(() => {
-        setShouldRestart(true);
-      }, 3000);
-      return () => clearTimeout(restartTimeout);
+      const t = setTimeout(() => setShouldRestart(true), 3500);
+      return () => clearTimeout(t);
     }
-
     const line = terminalLines[currentLine];
-    const textToType = line.prompt || line.content;
-    
+    const text = line.prompt || line.content;
     const startDelay = setTimeout(() => {
-      setIsTyping(true);
-      let charIndex = 0;
-
-      const typingInterval = setInterval(() => {
-        if (charIndex <= textToType.length) {
-          setCurrentText(textToType.slice(0, charIndex));
-          charIndex++;
-        } else {
-          clearInterval(typingInterval);
-          setIsTyping(false);
-          
+      let i = 0;
+      const iv = setInterval(() => {
+        if (i <= text.length) { setCurrentText(text.slice(0, i)); i++; }
+        else {
+          clearInterval(iv);
           setTimeout(() => {
-            setCompletedLines(prev => [...prev, { ...line, text: textToType }]);
+            setCompletedLines(p => [...p, { ...line, text }]);
             setCurrentText('');
-            setCurrentLine(prev => prev + 1);
-          }, 200);
+            setCurrentLine(p => p + 1);
+          }, 180);
         }
-      }, 50);
-
-      return () => clearInterval(typingInterval);
+      }, 45);
+      return () => clearInterval(iv);
     }, line.delay * 1000);
-
     return () => clearTimeout(startDelay);
   }, [currentLine]);
 
@@ -80,115 +59,103 @@ export default function TechnicalSkillsSection({ sectionRef }) {
     <motion.section
       ref={sectionRef}
       id="Technical"
-      className="pt-4 pb-10 px-4 sm:px-6 lg:px-20 text-white lg:scroll-mt-20"
+      className="py-12 px-4 sm:px-6 lg:px-20 text-white"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.7, delay: 0.6 }}
+      transition={{ duration: 0.7 }}
     >
-      <h2 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-10 text-center">
-        Technical Skills
-      </h2>
+      <div className="text-center mb-12">
+        <p className="text-xs tracking-[0.3em] mb-2 opacity-50" style={{ fontFamily: 'Share Tech Mono, monospace', color: '#00fff0' }}>
+          // SYSTEM_SCAN.SH
+        </p>
+        <h2 className="text-3xl font-bold" style={{ fontFamily: 'Orbitron, monospace', letterSpacing: '0.05em' }}>
+          Technical Skills
+        </h2>
+      </div>
+
       <div className="max-w-4xl mx-auto">
         <motion.div
-          initial={{ scale: 0.95, opacity: 0 }}
+          initial={{ scale: 0.97, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="bg-gradient-to-br from-gray-900 to-gray-800 backdrop-blur-lg border border-gray-700 shadow-2xl rounded-xl sm:rounded-2xl overflow-hidden"
+          className="relative rounded-xl overflow-hidden"
+          style={{ border: '1px solid rgba(0,255,240,0.15)', boxShadow: '0 0 30px rgba(0,255,240,0.05)' }}
         >
-          {/* Mac-style window bar */}
-          <div className="bg-gradient-to-r from-gray-800 to-gray-700 px-3 sm:px-4 py-2 sm:py-3 flex items-center gap-2 border-b border-gray-600">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <motion.span 
-                whileHover={{ scale: 1.2 }}
-                className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500 cursor-pointer shadow-lg"
-                title="Close"
-              />
-              <motion.span 
-                whileHover={{ scale: 1.2 }}
-                className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-400 cursor-pointer shadow-lg"
-                title="Minimize"
-              />
-              <motion.span 
-                whileHover={{ scale: 1.2 }}
-                className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500 cursor-pointer shadow-lg"
-                title="Zoom"
-              />
+          {/* Title bar */}
+          <div className="flex items-center gap-2 px-4 py-2.5"
+            style={{ background: 'rgba(2,6,12,0.98)', borderBottom: '1px solid rgba(0,255,240,0.1)' }}>
+            <div className="flex gap-1.5 mr-2">
+              {['#ff5f57','#ffbd2e','#28c840'].map((c,i)=>(
+                <div key={i} className="w-3 h-3 rounded-full" style={{ background: c }} />
+              ))}
             </div>
-            <div className="flex-1 text-center">
-              <span className="text-gray-400 text-[10px] sm:text-xs font-mono">
-                vivek@portfolio ~ skills
-              </span>
-            </div>
+            <span className="text-[10px] tracking-widest opacity-50" style={{ fontFamily:'Share Tech Mono, monospace', color:'#00fff0' }}>
+              vivek@portfolio ~ skills
+            </span>
+            <span className="ml-auto text-[10px] opacity-30" style={{ fontFamily:'Share Tech Mono, monospace', color:'#00fff0' }}>
+              bash — 80×24
+            </span>
           </div>
 
-          {/* Terminal content */}
-          <div className="p-3 sm:p-6 font-mono text-xs sm:text-sm bg-gray-900/50 min-h-[250px] sm:min-h-[300px] overflow-x-auto">
-            <div className="space-y-1.5 sm:space-y-2">
-              {/* Completed lines */}
-              {completedLines.map((line, index) => (
-                <motion.div
-                  key={`completed-${index}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                  className="break-words"
-                >
+          {/* Terminal body */}
+          <div className="relative p-5 min-h-[280px] overflow-x-auto"
+            style={{ background: 'rgba(2,6,12,0.95)', backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,240,0.012) 3px,rgba(0,255,240,0.012) 4px)' }}>
+
+            <div className="space-y-1.5" style={{ fontFamily: 'Share Tech Mono, monospace', fontSize: '13px' }}>
+              {completedLines.map((line, i) => (
+                <motion.div key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   {line.prompt ? (
-                    <div className="flex items-start gap-1 sm:gap-2">
-                      <span className="text-green-400 flex-shrink-0">➜</span>
-                      <span className="text-cyan-400 flex-shrink-0">~</span>
-                      <span className="text-white break-all">{line.text}</span>
+                    <div className="flex items-start gap-2">
+                      <span style={{ color: '#00ff88' }}>➜</span>
+                      <span style={{ color: '#00fff0' }}>~</span>
+                      <span style={{ color: '#e0f4ff' }}>{line.text}</span>
                     </div>
                   ) : (
-                    <div className="pl-4 sm:pl-8 text-gray-300 break-words">
-                      <span className="text-cyan-300">{line.text.split(':')[0]}:</span>
-                      <span className="text-gray-100"> {line.text.split(':')[1]}</span>
+                    <div className="pl-8">
+                      <span style={{ color: '#00fff0' }}>{line.text.split(':')[0]}:</span>
+                      <span style={{ color: 'rgba(160,196,212,0.85)' }}>{line.text.slice(line.text.indexOf(':') + 1)}</span>
                     </div>
                   )}
                 </motion.div>
               ))}
-              
-              {/* Currently typing line */}
+
               {currentLine < terminalLines.length && currentText && (
-                <div className="break-words">
+                <div>
                   {terminalLines[currentLine].prompt ? (
-                    <div className="flex items-start gap-1 sm:gap-2">
-                      <span className="text-green-400 flex-shrink-0">➜</span>
-                      <span className="text-cyan-400 flex-shrink-0">~</span>
-                      <span className="text-white break-all">{currentText}</span>
-                      <span className={`inline-block w-1.5 sm:w-2 h-3.5 sm:h-4 bg-green-400 ml-1 flex-shrink-0 ${showCursor ? 'opacity-100' : 'opacity-0'}`} />
+                    <div className="flex items-start gap-2">
+                      <span style={{ color: '#00ff88' }}>➜</span>
+                      <span style={{ color: '#00fff0' }}>~</span>
+                      <span style={{ color: '#e0f4ff' }}>{currentText}</span>
+                      <span style={{ display: 'inline-block', width: '8px', height: '14px', background: '#00fff0', opacity: showCursor ? 1 : 0, boxShadow: '0 0 6px #00fff0' }} />
                     </div>
                   ) : (
-                    <div className="pl-4 sm:pl-8 text-gray-300 break-words">
-                      <span className="text-cyan-300">{currentText.split(':')[0]}</span>
+                    <div className="pl-8">
+                      <span style={{ color: '#00fff0' }}>{currentText.split(':')[0]}</span>
                       {currentText.includes(':') && (
-                        <>
-                          <span className="text-cyan-300">:</span>
-                          <span className="text-gray-100"> {currentText.split(':')[1]}</span>
-                        </>
+                        <span style={{ color: 'rgba(160,196,212,0.85)' }}>{currentText.slice(currentText.indexOf(':'))}</span>
                       )}
-                      <span className={`inline-block w-1.5 sm:w-2 h-3.5 sm:h-4 bg-green-400 ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`} />
+                      <span style={{ display: 'inline-block', width: '8px', height: '14px', background: '#00fff0', opacity: showCursor ? 1 : 0, boxShadow: '0 0 6px #00fff0', marginLeft: '2px' }} />
                     </div>
                   )}
                 </div>
               )}
-              
-              {/* Final cursor when all lines are complete */}
-              {currentLine >= terminalLines.length && !isTyping && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="flex items-center gap-1 sm:gap-2 mt-3 sm:mt-4"
-                >
-                  <span className="text-green-400">➜</span>
-                  <span className="text-cyan-400">~</span>
-                  <span className={`inline-block w-1.5 sm:w-2 h-3.5 sm:h-4 bg-green-400 ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'}`} />
-                </motion.div>
+
+              {currentLine >= terminalLines.length && (
+                <div className="flex items-center gap-2 mt-2">
+                  <span style={{ color: '#00ff88' }}>➜</span>
+                  <span style={{ color: '#00fff0' }}>~</span>
+                  <span style={{ display: 'inline-block', width: '8px', height: '14px', background: '#00fff0', opacity: showCursor ? 1 : 0, boxShadow: '0 0 6px #00fff0' }} />
+                </div>
               )}
             </div>
+          </div>
+
+          {/* Status bar */}
+          <div className="flex items-center justify-between px-4 py-1.5"
+            style={{ background:'rgba(0,255,240,0.06)', borderTop:'1px solid rgba(0,255,240,0.08)' }}>
+            <span className="text-[9px] tracking-widest opacity-50" style={{ fontFamily:'Share Tech Mono, monospace', color:'#00fff0' }}>BASH_5.2</span>
+            <span className="text-[9px] tracking-widest opacity-35" style={{ fontFamily:'Share Tech Mono, monospace', color:'#00ff88' }}>● CONNECTED</span>
           </div>
         </motion.div>
       </div>

@@ -3,54 +3,12 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const certifications = [
-  {
-    name: 'GitHub Foundation',
-    org: 'GitHub',
-    date: 'Feb 2025',
-    icon: '/GitHub.png',
-    gradient: 'from-gray-700 via-gray-800 to-gray-900',
-    unoptimized: false
-  },
-  {
-    name: 'Networking Basics',
-    org: 'Cisco Networking Academy',
-    date: 'Sep 2024',
-    icon: '/networking_badge.jpg',
-    gradient: 'from-blue-600 via-cyan-600 to-teal-600',
-    unoptimized: false
-  },
-  {
-    name: 'Operating System Basics',
-    org: 'Cisco Networking Academy',
-    date: 'Mar 2024',
-    icon: '/OS_badge.png',
-    gradient: 'from-green-600 via-emerald-600 to-teal-600',
-    unoptimized: false
-  },
-  {
-    name: 'Introduction to IoT',
-    org: 'Cisco Networking Academy',
-    date: 'Mar 2024',
-    icon: 'https://www.netacad.com/p/ff9e491c-49be-4734-803e-a79e6e83dab1/badges/badge-images/introduction_to_iot_45.png',
-    gradient: 'from-indigo-600 via-purple-600 to-pink-600',
-    unoptimized: true
-  },
-  {
-    name: 'Computer Architecture',
-    org: 'IIT Madras (NPTEL)',
-    date: 'Oct 2023',
-    icon: '/nptel.png',
-    gradient: 'from-orange-600 via-red-600 to-pink-600',
-    unoptimized: false
-  },
-  {
-    name: 'Programming in Java',
-    org: 'IIT Kharagpur (NPTEL)',
-    date: 'Oct 2023',
-    icon: '/nptel.png',
-    gradient: 'from-yellow-600 via-orange-600 to-red-600',
-    unoptimized: false
-  }
+  { name: 'GitHub Foundation', org: 'GitHub', date: 'Feb 2025', icon: '/GitHub.png', accent: '#00fff0', unoptimized: false },
+  { name: 'Networking Basics', org: 'Cisco Networking Academy', date: 'Sep 2024', icon: '/networking_badge.jpg', accent: '#0066ff', unoptimized: false },
+  { name: 'Operating System Basics', org: 'Cisco Networking Academy', date: 'Mar 2024', icon: '/OS_badge.png', accent: '#00ff88', unoptimized: false },
+  { name: 'Introduction to IoT', org: 'Cisco Networking Academy', date: 'Mar 2024', icon: 'https://www.netacad.com/p/ff9e491c-49be-4734-803e-a79e6e83dab1/badges/badge-images/introduction_to_iot_45.png', accent: '#ff00aa', unoptimized: true },
+  { name: 'Computer Architecture', org: 'IIT Madras (NPTEL)', date: 'Oct 2023', icon: '/nptel.png', accent: '#ffaa00', unoptimized: false },
+  { name: 'Programming in Java', org: 'IIT Kharagpur (NPTEL)', date: 'Oct 2023', icon: '/nptel.png', accent: '#aa00ff', unoptimized: false },
 ];
 
 export default function CertificationsSection({ sectionRef }) {
@@ -58,49 +16,70 @@ export default function CertificationsSection({ sectionRef }) {
     <motion.section
       ref={sectionRef}
       id="certifications"
-      className="pt-4 pb-10 px-4 sm:px-6 lg:px-20 text-white lg:scroll-mt-20"
+      className="py-12 px-4 sm:px-6 lg:px-20 text-white"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.7, delay: 0.5 }}
+      transition={{ duration: 0.7 }}
     >
-      <h2 className="text-3xl font-semibold mb-10 text-center">Certifications</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="text-center mb-12">
+        <p className="text-xs tracking-[0.3em] mb-2 opacity-50" style={{ fontFamily: 'Share Tech Mono, monospace', color: '#00fff0' }}>
+          // CERTIFICATIONS.DAT
+        </p>
+        <h2 className="text-3xl font-bold" style={{ fontFamily: 'Orbitron, monospace', letterSpacing: '0.05em' }}>
+          Certifications
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
         {certifications.map((cert, idx) => (
           <motion.div
             key={idx}
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.92 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: idx * 0.1 }}
-            whileHover={{ scale: 1.05, y: -4 }}
+            transition={{ delay: idx * 0.08 }}
+            whileHover={{ y: -5, scale: 1.02 }}
             className="relative group"
           >
-            {/* Subtle glow */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl opacity-0 group-hover:opacity-100 blur-lg transition duration-500" />
-            
+            {/* Glow */}
+            <div className="absolute -inset-0.5 rounded-xl blur-lg opacity-0 group-hover:opacity-40 transition duration-400"
+              style={{ background: cert.accent }} />
+
             {/* Card */}
-            <div className="relative flex items-center gap-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-4 shadow-lg">
-              {/* Icon */}
-              <div className="flex-shrink-0">
-                <Image
-                  src={cert.icon}
-                  alt={`${cert.name} Certificate`}
-                  width={48}
-                  height={48}
-                  className="w-12 h-12 rounded-lg shadow-md object-contain bg-white/5 p-1"
-                  unoptimized={cert.unoptimized}
-                />
-              </div>
-              
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <div className="font-semibold text-base mb-1 group-hover:text-cyan-300 transition-colors truncate">
-                  {cert.name}
+            <div className="relative flex items-center gap-4 rounded-xl p-4 overflow-hidden"
+              style={{ background: 'rgba(4,10,20,0.9)', border: `1px solid ${cert.accent}22`, backdropFilter: 'blur(12px)' }}>
+
+              {/* Left accent line */}
+              <div className="absolute left-0 top-0 bottom-0 w-0.5" style={{ background: cert.accent, opacity: 0.6, boxShadow: `0 0 6px ${cert.accent}` }} />
+
+              {/* Scanlines */}
+              <div className="absolute inset-0 pointer-events-none opacity-15"
+                style={{ backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,0.012) 3px,rgba(255,255,255,0.012) 4px)' }} />
+
+              {/* Badge icon */}
+              <div className="flex-shrink-0 relative z-10">
+                <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${cert.accent}25` }}>
+                  <Image src={cert.icon} alt={cert.name} width={40} height={40}
+                    className="w-10 h-10 object-contain p-0.5" unoptimized={cert.unoptimized} />
                 </div>
-                <div className="text-sm text-gray-200 truncate">{cert.org}</div>
-                <div className="text-xs text-gray-400 mt-1">{cert.date}</div>
               </div>
+
+              {/* Text */}
+              <div className="flex-1 min-w-0 relative z-10">
+                <p className="font-semibold text-sm mb-0.5 truncate group-hover:text-white transition-colors"
+                  style={{ color: cert.accent, fontFamily: 'Orbitron, monospace', fontSize: '11px', letterSpacing: '0.03em' }}>
+                  {cert.name}
+                </p>
+                <p className="text-xs opacity-55 truncate" style={{ fontFamily: 'Share Tech Mono, monospace' }}>{cert.org}</p>
+                <p className="text-[10px] opacity-35 mt-0.5" style={{ fontFamily: 'Share Tech Mono, monospace', color: cert.accent }}>{cert.date}</p>
+              </div>
+
+              {/* Corner brackets */}
+              {[{top:4,right:4,bw:'1px 1px 0 0'}].map((s,i)=>(
+                <div key={i} className="absolute w-2 h-2" style={{top:s.top,right:s.right,borderStyle:'solid',borderWidth:s.bw,borderColor:`${cert.accent}40`}} />
+              ))}
             </div>
           </motion.div>
         ))}
