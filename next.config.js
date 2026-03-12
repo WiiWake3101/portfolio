@@ -22,6 +22,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.netacad.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'github-readme-stats.vercel.app',
+      },
+      {
+        protocol: 'https',
+        hostname: 'streak-stats.demolab.com',
+      },
     ],
   },
 };

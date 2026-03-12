@@ -18,6 +18,11 @@ import Footer from '../components/sections/Footer';
 import CyberpunkParticles from '../components/CyberpunkParticles';
 import CyberpunkCursor from '../components/CyberpunkCursor';
 import ScrollProgress from '../components/ScrollProgress';
+import GitHubStatsSection from '../components/sections/GitHubStatsSection';
+import HackathonsSection from '../components/sections/HackathonsSection';
+import BackToTop from '../components/BackToTop';
+import BootScreen from '../components/BootScreen';
+import FloatingSocial from '../components/FloatingSocial';
 
 export default function Home() {
   const sectionRefs = useRef([]);
@@ -56,6 +61,9 @@ export default function Home() {
       {/* UI chrome */}
       <ScrollProgress />
       <CyberpunkCursor />
+      <BackToTop />
+      <FloatingSocial />
+      <BootScreen />
 
       {/* ── Page content ── */}
       <div className="relative z-10 pt-28 px-4 sm:px-8 lg:px-16 cursor-none">
@@ -64,8 +72,10 @@ export default function Home() {
         <EducationSection sectionRef={el => sectionRefs.current[1] = el} />
         <InternshipsSection sectionRef={el => sectionRefs.current[2] = el} />
         <ClubExperienceSection />
+        <HackathonsSection />
         <ProjectsSection sectionRef={el => sectionRefs.current[3] = el} />
         <ResearchSection sectionRef={el => sectionRefs.current[4] = el} />
+        <GitHubStatsSection />
         <CertificationsSection sectionRef={el => sectionRefs.current[5] = el} />
         <TechnicalSkillsSection sectionRef={el => sectionRefs.current[6] = el} />
         <SkillsProficiencySection sectionRef={el => sectionRefs.current[7] = el} />

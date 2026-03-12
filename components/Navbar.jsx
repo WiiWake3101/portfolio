@@ -22,7 +22,7 @@ const navLinks = [
 ];
 
 // ─── Individual nav item ────────────────────────────────────────────────────
-function NavItem({ href, icon: Icon, label, isActive }) {
+function NavItem({ href, icon: Icon, label, isActive, onClick }) {
   const [hovered, setHovered] = useState(false);
   return (
     <div
@@ -30,7 +30,7 @@ function NavItem({ href, icon: Icon, label, isActive }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <a href={href} className="relative flex flex-col items-center gap-0.5 px-2 py-1.5">
+      <a href={href} onClick={onClick} className="relative flex flex-col items-center gap-0.5 px-2 py-1.5">
         {/* Animated active highlight pill */}
         {isActive && (
           <motion.div
@@ -126,12 +126,14 @@ export default function Navbar() {
     const ratios = {};
 
     const pickMostVisible = () => {
-      let best = 'home';
-      let bestRatio = -1;
+      let best = null;
+      let bestRatio = 0;
       for (const [id, r] of Object.entries(ratios)) {
         if (r > bestRatio) { bestRatio = r; best = id; }
       }
-      setActive(best);
+      // Only update when something is actually visible — avoids flashing
+      // to 'home' mid-scroll when all ratios momentarily hit 0.
+      if (best) setActive(best);
     };
 
     const observer = new IntersectionObserver(
@@ -217,6 +219,7 @@ export default function Navbar() {
                 icon={icon}
                 label={label}
                 isActive={activeSection === href.slice(1)}
+                onClick={() => setActive(href.slice(1))}
               />
             ))}
           </div>
