@@ -17,10 +17,6 @@ export default function BootScreen() {
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    // Only show once per browser session
-    if (typeof window !== 'undefined' && sessionStorage.getItem('vg_booted')) {
-      return;
-    }
     setVisible(true);
 
     let i = 0;
@@ -35,9 +31,6 @@ export default function BootScreen() {
           setFading(true);
           setTimeout(() => {
             setVisible(false);
-            if (typeof window !== 'undefined') {
-              sessionStorage.setItem('vg_booted', '1');
-            }
           }, 700);
         }, 500);
       }
