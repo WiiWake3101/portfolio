@@ -16,7 +16,6 @@ import LanguagesSection from '../components/sections/LanguagesSection';
 import ContactSection from '../components/sections/ContactSection';
 import Footer from '../components/sections/Footer';
 import CyberpunkParticles from '../components/CyberpunkParticles';
-import CyberpunkCursor from '../components/CyberpunkCursor';
 import ScrollProgress from '../components/ScrollProgress';
 import GitHubStatsSection from '../components/sections/GitHubStatsSection';
 import HackathonsSection from '../components/sections/HackathonsSection';
@@ -65,7 +64,7 @@ export default function Home() {
       <BootScreen />
 
       {/* ── Page content ── */}
-      <div className="relative z-10 pt-28 px-4 sm:px-8 lg:px-16 cursor-none">
+      <div className="relative z-10 pt-28 px-4 sm:px-8 lg:px-16">
         <Navbar />
         <HeroSection sectionRef={el => sectionRefs.current[0] = el} />
         <EducationSection sectionRef={el => sectionRefs.current[1] = el} />
