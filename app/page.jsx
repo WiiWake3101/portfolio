@@ -60,7 +60,6 @@ export default function Home() {
 
       {/* UI chrome */}
       <ScrollProgress />
-      <CyberpunkCursor />
       <BackToTop />
       <FloatingSocial />
       <BootScreen />
