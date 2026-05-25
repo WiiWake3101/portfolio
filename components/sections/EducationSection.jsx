@@ -4,11 +4,21 @@ import Image from 'next/image';
 
 const educationData = [
   {
+    degree: 'MS in Computer Engineering',
+    institution: 'National University of Singapore (NUS)',
+    logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/NUS_coat_of_arms.svg/960px-NUS_coat_of_arms.svg.png',
+    cgpa: 'Intake: Aug 2026',
+    date: 'August 2026',
+    link: 'https://www.nus.edu.sg/',
+    status: 'Upcoming',
+    accent: '#ff6b00',
+  },
+  {
     degree: 'B.Tech in Computer Science and Engineering',
     institution: 'SRMIST, Kattankulathur',
     logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwyYOZllJlZZM8VeKPrGcCWtjc6nBW1sg5mQ&s',
-    cgpa: 'CGPA: 9.22 / 10',
-    date: 'May 2026*',
+    cgpa: 'CGPA: 9.35 / 10',
+    date: 'May 2026',
     link: 'https://www.srmist.edu.in/',
     status: 'Pursuing',
     accent: '#00fff0',
@@ -80,6 +90,18 @@ function EduCard({ edu, idx }) {
             ACTIVE
           </div>
         )}
+        {edu.status === 'Upcoming' && (
+          <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded text-[10px] tracking-widest"
+            style={{ fontFamily:'Share Tech Mono, monospace', background:'rgba(255,107,0,0.1)', border:'1px solid rgba(255,107,0,0.3)', color:'#ff6b00' }}>
+            <motion.span
+              animate={{ opacity:[1,0.3,1] }}
+              transition={{ duration:1.5, repeat:Infinity }}
+              className="w-1.5 h-1.5 rounded-full inline-block"
+              style={{ background:'#ff6b00' }}
+            />
+            STARTING SOON
+          </div>
+        )}
 
         {/* Logo */}
         <a href={edu.link} target="_blank" rel="noopener noreferrer">
@@ -116,9 +138,9 @@ function EduCard({ edu, idx }) {
 export default function EducationSection({ sectionRef }) {
   const count = educationData.length;
 
-  // Split into rows of 3 for lg, rows of 2 for sm
-  // For any leftover (odd) last item on sm, we center it
-  const hasOddLastRow = count % 2 !== 0;
+  // Check if last row has odd number in different layouts
+  const hasOddLastRowSm = count % 2 !== 0; // for 2-column layout
+  const lastRowCountLg = count % 3; // for 3-column layout (0, 1, or 2)
 
   return (
     <motion.section
@@ -155,21 +177,22 @@ export default function EducationSection({ sectionRef }) {
             {educationData.map((edu, idx) => <EduCard key={idx} edu={edu} idx={idx} />)}
           </div>
         ) : (
-          // 3+ items → lg: 3 cols (all in one row for 3)
-          //             sm: 2 cols, lone last card spans 2 cols and is self-centered
+          // 3+ items → responsive grid
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {educationData.map((edu, idx) => {
-              const isLastOdd = hasOddLastRow && idx === count - 1;
+              const isLastOddSm = hasOddLastRowSm && idx === count - 1;
+              const isLastInRow = idx >= count - lastRowCountLg;
+              const shouldCenterLg = lastRowCountLg > 0 && isLastInRow;
+              
               return (
                 <div
                   key={idx}
-                  className={
-                    isLastOdd
-                      ? 'sm:col-span-2 lg:col-span-1 flex justify-center lg:block'
-                      : ''
-                  }
+                  className={`
+                    ${isLastOddSm ? 'sm:col-span-2 lg:col-span-1' : ''}
+                    ${shouldCenterLg && lastRowCountLg === 1 ? 'lg:col-start-2' : ''}
+                  `}
                 >
-                  <div className={isLastOdd ? 'w-full sm:max-w-sm lg:max-w-none' : 'w-full'}>
+                  <div className={isLastOddSm ? 'w-full sm:max-w-sm lg:max-w-none mx-auto' : 'w-full'}>
                     <EduCard edu={edu} idx={idx} />
                   </div>
                 </div>

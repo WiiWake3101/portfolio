@@ -1,6 +1,7 @@
 'use client';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 const GitHubIcon = () => (
   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
@@ -17,11 +18,29 @@ const corners = [
 
 const undergraduateProjects = [
   {
+    image: '/major_project.jpg',
+    video: '/major_project.mp4',
+    hasMedia: true, // Flag to show media switcher
+    duration: 'Dec 2025 – Apr 2026',
+    type: 'Undergraduate',
+    title: 'Integrating IoT Health Monitoring Devices in Automotive Vehicles',
+    subtitle: 'Major Project',
+    github: 'https://github.com/IoT-Health-Monitoring-Devices-in-EV/Integrating-IoT-Health-Monitoring-Devices-in-EV',
+    accent: '#0066ff',
+    points: [
+      'Extended minor project by integrating Arduino Nano ESP32 with A7670E Cat-1 GSM module for real-time cloud transmission with live GPS tracking.',
+      'Built VitalFlow mobile app using React Native and Supabase with live health dashboard, analytics, and push notifications.',
+      'Implemented SOS emergency feature with GPS reverse geocoding to auto-detect national emergency number and dispatch location.',
+      'Achieved ~390ms average cloud API response time for near real-time physiological data delivery over 4G network.',
+      'Incorporated IMU-based inactivity detection triggering vibration motor after 30 minutes to alert drivers.'
+    ]
+  },
+  {
     image: '/ug_project.jpg',
     duration: 'Jan 2025 – May 2025',
     type: 'Undergraduate',
     title: 'Embedded ML for Early Heart Attack Prediction',
-    subtitle: 'Undergraduate Project',
+    subtitle: 'Minor Project',
     github: 'https://github.com/IoT-Health-Monitoring-Devices-in-EV/Embedded-Machine-Learning-for-Early-Detection-of-Heart-Attack-Symptoms',
     accent: '#00fff0',
     points: [
@@ -148,6 +167,130 @@ function SubHeading({ label, comment }) {
   );
 }
 
+// Media display component with photo/video toggle
+function ProjectMedia({ project, idx }) {
+  const [showVideo, setShowVideo] = useState(false);
+
+  // Auto-swap: Start with photo for 5 seconds, then show video
+  useEffect(() => {
+    if (!project.hasMedia) return;
+
+    // If showing photo, switch to video after 5 seconds
+    if (!showVideo) {
+      const timer = setTimeout(() => {
+        setShowVideo(true);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showVideo, project.hasMedia]);
+
+  // Handle video end - switch back to photo (which will trigger auto-swap again)
+  const handleVideoEnd = () => {
+    setShowVideo(false);
+  };
+
+  return (
+    <div className="flex-shrink-0 flex justify-center items-center p-5 md:p-6 w-full md:w-[420px] relative z-10">
+      <motion.div
+        whileHover={{ scale: 1.03 }}
+        transition={{ type: 'spring', stiffness: 300 }}
+        className="relative rounded-xl overflow-hidden w-full"
+        style={{ border: `1px solid ${project.accent}25`, boxShadow: `0 0 20px ${project.accent}15` }}
+      >
+        {/* Media switcher buttons */}
+        {project.hasMedia && (
+          <div className="absolute top-3 right-3 z-20 flex gap-2">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setShowVideo(false)}
+              className={`px-3 py-1.5 rounded text-[9px] font-bold tracking-widest transition-all ${
+                !showVideo ? 'opacity-100' : 'opacity-40'
+              }`}
+              style={{
+                fontFamily: 'Orbitron, monospace',
+                background: !showVideo ? `${project.accent}25` : 'rgba(0,0,0,0.7)',
+                border: `1px solid ${!showVideo ? project.accent : 'rgba(255,255,255,0.2)'}`,
+                color: !showVideo ? project.accent : '#fff',
+                boxShadow: !showVideo ? `0 0 12px ${project.accent}40` : 'none',
+              }}
+            >
+              PHOTO
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setShowVideo(true)}
+              className={`px-3 py-1.5 rounded text-[9px] font-bold tracking-widest transition-all ${
+                showVideo ? 'opacity-100' : 'opacity-40'
+              }`}
+              style={{
+                fontFamily: 'Orbitron, monospace',
+                background: showVideo ? `${project.accent}25` : 'rgba(0,0,0,0.7)',
+                border: `1px solid ${showVideo ? project.accent : 'rgba(255,255,255,0.2)'}`,
+                color: showVideo ? project.accent : '#fff',
+                boxShadow: showVideo ? `0 0 12px ${project.accent}40` : 'none',
+              }}
+            >
+              VIDEO
+            </motion.button>
+          </div>
+        )}
+
+        {/* Carousel-style display with fade transitions */}
+        <AnimatePresence mode="wait">
+          {showVideo && project.video ? (
+            <motion.div
+              key="video"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="relative w-full"
+              style={{ aspectRatio: '16/9' }}
+            >
+              <video
+                src={project.video}
+                controls
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover rounded-lg"
+                style={{ background: '#000' }}
+              >
+                Your browser does not support the video tag.
+              </video>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="image"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="relative"
+            >
+            
+            <Image
+                src={project.image}
+                alt={project.title}
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover rounded-lg"
+                unoptimized
+            /> 
+              {/* Image overlay tint */}
+              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500"
+                style={{ background: `linear-gradient(135deg, ${project.accent}08, transparent)` }} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </div>
+  );
+}
+
 export default function ProjectsSection({ sectionRef }) {
   return (
     <motion.section
@@ -212,26 +355,8 @@ export default function ProjectsSection({ sectionRef }) {
                       style={{ top: s.top, left: s.left, right: s.right, bottom: s.bottom, borderStyle: 'solid', borderWidth: s.bw, borderColor: `${project.accent}45` }} />
                   ))}
 
-                  {/* Image */}
-                  <div className="flex-shrink-0 flex justify-center items-center p-5 md:p-6 w-full md:w-[420px] relative z-10">
-                    <motion.div
-                      whileHover={{ scale: 1.03 }}
-                      transition={{ type: 'spring', stiffness: 300 }}
-                      className="relative rounded-xl overflow-hidden w-full"
-                      style={{ border: `1px solid ${project.accent}25`, boxShadow: `0 0 20px ${project.accent}15` }}
-                    >
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        width={420}
-                        height={280}
-                        className="object-cover w-full h-auto max-h-[280px]"
-                      />
-                      {/* Image overlay tint */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        style={{ background: `linear-gradient(135deg, ${project.accent}08, transparent)` }} />
-                    </motion.div>
-                  </div>
+                  {/* Media (Image/Video with switcher) */}
+                  <ProjectMedia project={project} idx={idx} />
 
                   {/* Content */}
                   <div className="flex-1 flex flex-col justify-center p-6 relative z-10">

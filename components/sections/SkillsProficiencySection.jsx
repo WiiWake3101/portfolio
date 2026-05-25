@@ -317,7 +317,7 @@ ${skillCategories[selectedCategory].skills.map((skill, idx) =>
 							<div className="px-3 py-1"
 								style={{ background: 'rgba(0,0,0,0.4)', borderBottom: '1px solid rgba(0,255,240,0.08)' }}>
 								<div className="inline-flex items-center gap-2 px-3 py-1 rounded-t text-[10px]"
-									style={{ background: 'rgba(0,255,240,0.06)', border: `1px solid ${activeAccent}25`, borderBottom: 'none', color: activeAccent, fontFamily: 'Share Tech Mono, monospace' }}>
+									style={{ background: 'rgba(0,255,240,0.06)', borderTop: `1px solid ${activeAccent}25`, borderLeft: `1px solid ${activeAccent}25`, borderRight: `1px solid ${activeAccent}25`, borderBottom: 'none', color: activeAccent, fontFamily: 'Share Tech Mono, monospace' }}>
 									<span>SkillsMonitor.ino</span>
 									{currentCharIndex < arduinoCode.length && (
 										<motion.span animate={{ opacity: [1, 0] }} transition={{ duration: 0.5, repeat: Infinity }}

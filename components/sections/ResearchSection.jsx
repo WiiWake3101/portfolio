@@ -7,6 +7,7 @@ export default function ResearchSection({ sectionRef }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMobile, setIsMobile]         = useState(false);
   const [isClient, setIsClient]         = useState(false);
+  const [activePaper, setActivePaper]   = useState(0);
 
   useEffect(() => {
     setIsClient(true);
@@ -16,8 +17,53 @@ export default function ResearchSection({ sectionRef }) {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  const pdfUrl    = '/research_paper.pdf#toolbar=0&navpanes=0&view=FitH';
-  const directUrl = '/research_paper.pdf';
+  const papers = [
+    {
+      id: 1,
+      title: 'IoT-Integrated Health Monitoring in Electric Vehicles for Real-Time Cardiac Detection',
+      pdfUrl: '/research_paper_2.pdf#toolbar=0&navpanes=0&view=FitH',
+      directUrl: '/research_paper_2.pdf',
+      status: 'AWAITING_PUBLICATION',
+      statusColor: '#ffaa00',
+      authors: [
+        { name: 'Dr. R. Jeya', email: 'jeyar@srmist.edu.in', affiliation: 'SRM Institute of Science and Technology' },
+        { name: 'Prof. Dr. Hezerul Bin Abdul Karim', email: 'hezerul@mmu.edu.my', affiliation: 'Multimedia University, Malaysia' },
+        { name: 'Vivek M G', email: 'vm4512@srmist.edu.in', affiliation: 'SRMIST, Kattankulathur' },
+        { name: 'S Raghuram', email: 'rs0657@srmist.edu.in', affiliation: 'SRMIST, Kattankulathur' },
+        { name: 'Dr. Sarina Binti Mansor', email: 'sarina.mansor@mmu.edu.my', affiliation: 'Multimedia University, Malaysia' },
+        { name: 'Dr. Tan Yi Fei', email: 'yftan@mmu.edu.my', affiliation: 'Multimedia University, Malaysia' },
+      ],
+      conference: 'MECON 2026',
+      conferenceDetails: 'Multimedia University Engineering Conference 2026',
+      tags: [
+        { label: '2026', accent: '#0066ff' },
+        { label: 'PRESENTED', accent: '#00ff88' },
+        { label: 'AWAITING PUBLICATION', accent: '#ffaa00' }
+      ]
+    },
+    {
+      id: 2,
+      title: 'Embedded Machine Learning for Early Detection of Heart Attack Symptoms',
+      pdfUrl: '/research_paper.pdf#toolbar=0&navpanes=0&view=FitH',
+      directUrl: '/research_paper.pdf',
+      status: 'AWAITING_PUBLICATION',
+      statusColor: '#ffaa00',
+      authors: [
+        { name: 'Vivek M G', email: 'vm4512@srmist.edu.in', affiliation: 'SRMIST, Kattankulathur' },
+        { name: 'S Raghuram', email: 'rs0657@srmist.edu.in', affiliation: 'SRMIST, Kattankulathur' },
+        { name: 'Dr. R Jeya', email: 'jeyar@srmist.edu.in', affiliation: 'SRMIST, Kattankulathur' },
+      ],
+      conference: 'I-SMAC 2025',
+      conferenceDetails: '9th Intl. Conf. on IoT in Social, Mobile, Analytics and Cloud',
+      tags: [
+        { label: 'OCT 08–10 2025', accent: '#0066ff' },
+        { label: 'PRESENTED OCT 9', accent: '#00ff88' },
+        { label: 'AWAITING PUBLICATION', accent: '#ffaa00' }
+      ]
+    }
+  ];
+
+  const currentPaper = papers[activePaper];
 
   const Tag = ({ children, accent = '#00fff0' }) => (
     <span className="inline-block text-[10px] tracking-widest px-2 py-0.5 rounded"
@@ -40,16 +86,38 @@ export default function ResearchSection({ sectionRef }) {
         <p className="text-xs tracking-[0.3em] mb-2 opacity-50" style={{ fontFamily: 'Share Tech Mono, monospace', color: '#00fff0' }}>
           // RESEARCH_OUTPUT.PDF
         </p>
-        <h2 className="text-3xl font-bold" style={{ fontFamily: 'Orbitron, monospace', letterSpacing: '0.05em' }}>
-          Research Paper
+        <h2 className="text-3xl font-bold mb-8" style={{ fontFamily: 'Orbitron, monospace', letterSpacing: '0.05em' }}>
+          Research Papers
         </h2>
+        
+        {/* Paper Selector */}
+        <div className="flex justify-center gap-3 flex-wrap">
+          {papers.map((paper, idx) => (
+            <motion.button
+              key={paper.id}
+              onClick={() => setActivePaper(idx)}
+              whileHover={{ scale: 1.02 }}
+              className="px-4 py-2 rounded-lg text-xs tracking-widest transition-all"
+              style={{
+                fontFamily: 'Orbitron, monospace',
+                background: activePaper === idx ? 'rgba(0,255,240,0.1)' : 'rgba(4,10,20,0.6)',
+                border: `1px solid ${activePaper === idx ? 'rgba(0,255,240,0.4)' : 'rgba(0,255,240,0.15)'}`,
+                color: activePaper === idx ? '#00fff0' : 'rgba(160,196,212,0.7)',
+                boxShadow: activePaper === idx ? '0 0 20px rgba(0,255,240,0.2)' : 'none'
+              }}
+            >
+              PAPER {idx + 1}
+            </motion.button>
+          ))}
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Sidebar */}
         <motion.div
+          key={currentPaper.id}
           initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          animate={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           className="lg:col-span-1"
         >
@@ -67,27 +135,23 @@ export default function ResearchSection({ sectionRef }) {
               {/* Status */}
               <div className="flex items-center gap-2">
                 <motion.span animate={{ opacity:[1,0.3,1] }} transition={{ duration:1.4, repeat:Infinity }}
-                  className="w-2 h-2 rounded-full" style={{ background:'#ffaa00', boxShadow:'0 0 6px #ffaa00' }} />
-                <Tag accent="#ffaa00">UNDER_REVIEW</Tag>
+                  className="w-2 h-2 rounded-full" style={{ background: currentPaper.statusColor, boxShadow:`0 0 6px ${currentPaper.statusColor}` }} />
+                <Tag accent={currentPaper.statusColor}>{currentPaper.status}</Tag>
               </div>
 
               {/* Title */}
               <h3 className="text-sm font-bold leading-snug"
                 style={{ fontFamily: 'Orbitron, monospace', fontSize: '12px', color: '#00fff0', textShadow: '0 0 10px rgba(0,255,240,0.4)', letterSpacing: '0.03em' }}>
-                Embedded Machine Learning for Early Detection of Heart Attack Symptoms
+                {currentPaper.title}
               </h3>
 
               {/* Authors */}
-              <div className="space-y-3 pt-2" style={{ borderTop: '1px solid rgba(0,255,240,0.08)' }}>
-                {[
-                  { name: 'Vivek M G', email: 'vm4512@srmist.edu.in' },
-                  { name: 'S Raghuram', email: 'rs0657@srmist.edu.in' },
-                  { name: 'Dr. R Jeya', email: 'jeyar@srmist.edu.in' },
-                ].map((a,i) => (
+              <div className="space-y-3 pt-2 max-h-[400px] overflow-y-auto pr-2" style={{ borderTop: '1px solid rgba(0,255,240,0.08)' }}>
+                {currentPaper.authors.map((author, i) => (
                   <div key={i}>
-                    <p className="text-xs font-bold" style={{ color: i === 0 ? '#00fff0' : 'rgba(160,196,212,0.9)' }}>{a.name}</p>
-                    <p className="text-[10px] opacity-40" style={{ fontFamily: 'Share Tech Mono, monospace' }}>SRMIST, Kattankulathur</p>
-                    <p className="text-[10px]" style={{ fontFamily: 'Share Tech Mono, monospace', color: '#00fff0', opacity: 0.5 }}>{a.email}</p>
+                    <p className="text-xs font-bold" style={{ color: author.name.includes('Vivek') ? '#00fff0' : 'rgba(160,196,212,0.9)' }}>{author.name}</p>
+                    <p className="text-[10px] opacity-40" style={{ fontFamily: 'Share Tech Mono, monospace' }}>{author.affiliation}</p>
+                    <p className="text-[10px]" style={{ fontFamily: 'Share Tech Mono, monospace', color: '#00fff0', opacity: 0.5 }}>{author.email}</p>
                   </div>
                 ))}
               </div>
@@ -95,14 +159,15 @@ export default function ResearchSection({ sectionRef }) {
               {/* Conference */}
               <div className="pt-3 space-y-2" style={{ borderTop: '1px solid rgba(0,255,240,0.08)' }}>
                 <p className="text-[11px] font-semibold leading-snug" style={{ color: '#00fff0', fontFamily: 'Orbitron, monospace', fontSize: '10px' }}>
-                  I-SMAC 2025
+                  {currentPaper.conference}
                 </p>
                 <p className="text-[10px] opacity-50" style={{ fontFamily: 'Share Tech Mono, monospace' }}>
-                  9th Intl. Conf. on IoT in Social, Mobile, Analytics and Cloud
+                  {currentPaper.conferenceDetails}
                 </p>
                 <div className="flex flex-wrap gap-1.5 pt-1">
-                  <Tag accent="#0066ff">OCT 08–10 2025</Tag>
-                  <Tag accent="#00ff88">PRESENTED OCT 9</Tag>
+                  {currentPaper.tags.map((tag, i) => (
+                    <Tag key={i} accent={tag.accent}>{tag.label}</Tag>
+                  ))}
                 </div>
               </div>
             </div>
@@ -111,8 +176,9 @@ export default function ResearchSection({ sectionRef }) {
 
         {/* PDF Viewer */}
         <motion.div
+          key={`viewer-${currentPaper.id}`}
           initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          animate={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           className="lg:col-span-2 relative rounded-xl overflow-hidden"
           style={{ border: '1px solid rgba(0,255,240,0.15)', boxShadow: '0 0 30px rgba(0,255,240,0.04)' }}
@@ -124,17 +190,19 @@ export default function ResearchSection({ sectionRef }) {
               <div className="flex gap-1.5">
                 {['#ff5f57','#ffbd2e','#28c840'].map((c,i)=><div key={i} className="w-3 h-3 rounded-full" style={{ background:c }} />)}
               </div>
-              <span className="text-[10px] tracking-widest opacity-40" style={{ fontFamily:'Share Tech Mono, monospace', color:'#00fff0' }}>research_paper.pdf</span>
+              <span className="text-[10px] tracking-widest opacity-40" style={{ fontFamily:'Share Tech Mono, monospace', color:'#00fff0' }}>
+                research_paper_{currentPaper.id}.pdf
+              </span>
             </div>
             <div className="flex gap-2">
               {isClient && isMobile && (
                 <>
-                  <motion.a href={directUrl} target="_blank" rel="noopener noreferrer" whileHover={{ scale:1.05 }}
+                  <motion.a href={currentPaper.directUrl} target="_blank" rel="noopener noreferrer" whileHover={{ scale:1.05 }}
                     className="flex items-center gap-1 px-3 py-1 rounded text-[10px] tracking-widest"
                     style={{ fontFamily:'Orbitron, monospace', background:'rgba(0,102,255,0.1)', border:'1px solid rgba(0,102,255,0.3)', color:'#0066ff' }}>
                     <FaExternalLinkAlt size={9} /> OPEN
                   </motion.a>
-                  <motion.a href={directUrl} download="Research_Paper_Vivek.pdf" whileHover={{ scale:1.05 }}
+                  <motion.a href={currentPaper.directUrl} download={`Research_Paper_${currentPaper.id}_Vivek.pdf`} whileHover={{ scale:1.05 }}
                     className="flex items-center gap-1 px-3 py-1 rounded text-[10px] tracking-widest"
                     style={{ fontFamily:'Orbitron, monospace', background:'rgba(0,255,136,0.1)', border:'1px solid rgba(0,255,136,0.3)', color:'#00ff88' }}>
                     <FaDownload size={9} /> SAVE
@@ -167,12 +235,12 @@ export default function ResearchSection({ sectionRef }) {
                 </div>
                 <p className="text-xs opacity-50 text-center" style={{ fontFamily:'Share Tech Mono, monospace' }}>Open or download to read</p>
                 <div className="flex gap-3">
-                  <motion.a href={directUrl} target="_blank" rel="noopener noreferrer" whileHover={{ scale:1.05 }}
+                  <motion.a href={currentPaper.directUrl} target="_blank" rel="noopener noreferrer" whileHover={{ scale:1.05 }}
                     className="flex items-center gap-2 px-4 py-2 rounded text-sm"
                     style={{ fontFamily:'Orbitron, monospace', fontSize:'11px', background:'rgba(0,102,255,0.1)', border:'1px solid rgba(0,102,255,0.35)', color:'#0066ff' }}>
                     <FaExternalLinkAlt size={11}/> OPEN
                   </motion.a>
-                  <motion.a href={directUrl} download="Research_Paper_Vivek.pdf" whileHover={{ scale:1.05 }}
+                  <motion.a href={currentPaper.directUrl} download={`Research_Paper_${currentPaper.id}_Vivek.pdf`} whileHover={{ scale:1.05 }}
                     className="flex items-center gap-2 px-4 py-2 rounded text-sm"
                     style={{ fontFamily:'Orbitron, monospace', fontSize:'11px', background:'rgba(0,255,136,0.1)', border:'1px solid rgba(0,255,136,0.35)', color:'#00ff88' }}>
                     <FaDownload size={11}/> SAVE
@@ -180,9 +248,9 @@ export default function ResearchSection({ sectionRef }) {
                 </div>
               </div>
             ) : (
-              <object data={pdfUrl} type="application/pdf"
+              <object data={currentPaper.pdfUrl} type="application/pdf"
                 className={`w-full border-0 ${isFullscreen ? 'h-screen' : 'h-[600px] lg:h-[800px]'}`}>
-                <iframe src={isClient ? `https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + directUrl)}&embedded=true` : directUrl}
+                <iframe src={isClient ? `https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + currentPaper.directUrl)}&embedded=true` : currentPaper.directUrl}
                   className="w-full h-full border-0" title="Research Paper" />
               </object>
             )}
@@ -191,8 +259,12 @@ export default function ResearchSection({ sectionRef }) {
           {/* Status bar */}
           <div className="flex items-center justify-between px-4 py-1.5"
             style={{ background:'rgba(0,255,240,0.05)', borderTop:'1px solid rgba(0,255,240,0.08)' }}>
-            <span className="text-[9px] tracking-widest opacity-40" style={{ fontFamily:'Share Tech Mono, monospace', color:'#00fff0' }}>I-SMAC_2025</span>
-            <span className="text-[9px] tracking-widest opacity-30" style={{ fontFamily:'Share Tech Mono, monospace', color:'#ffaa00' }}>UNDER_REVIEW</span>
+            <span className="text-[9px] tracking-widest opacity-40" style={{ fontFamily:'Share Tech Mono, monospace', color:'#00fff0' }}>
+              {currentPaper.conference.replace(/\s+/g, '_').toUpperCase()}
+            </span>
+            <span className="text-[9px] tracking-widest opacity-30" style={{ fontFamily:'Share Tech Mono, monospace', color: currentPaper.statusColor }}>
+              {currentPaper.status}
+            </span>
           </div>
         </motion.div>
       </div>

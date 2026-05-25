@@ -1,11 +1,8 @@
 'use client';
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
-const USERNAME = 'WiiWake3101';
-
-const statsUrl = `https://github-readme-stats.vercel.app/api?username=${USERNAME}&show_icons=true&count_private=true&bg_color=020408&border_color=00fff030&title_color=00fff0&text_color=a0c4d4&icon_color=00fff0&hide_border=false`;
-const langsUrl = `https://github-readme-stats.vercel.app/api/top-langs/?username=${USERNAME}&layout=compact&bg_color=020408&border_color=00fff030&title_color=00fff0&text_color=a0c4d4&hide_border=false&langs_count=8`;
-const streakUrl = `https://streak-stats.demolab.com/?user=${USERNAME}&background=020408&border=00fff030&ring=00fff0&fire=ff00aa&currStreakLabel=00fff0&sideNums=ffffff&sideLabels=a0c4d4&dates=607080`;
+const USERNAME = 'Wiiwake3101';
 
 const corners = [
   { top: 8, left: 8, bw: '1px 0 0 1px' },
@@ -14,7 +11,17 @@ const corners = [
   { bottom: 8, right: 8, bw: '0 1px 1px 0' },
 ];
 
-function StatCard({ src, alt, delay = 0, className = '' }) {
+function StatCard({ src, alt, delay = 0, className = '', fallbackContent }) {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imgSrc, setImgSrc] = useState('');
+
+  useEffect(() => {
+    // Add cache buster at runtime
+    const separator = src.includes('?') ? '&' : '?';
+    setImgSrc(`${src}${separator}cache_bust=${Date.now()}`);
+  }, [src]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -37,20 +44,106 @@ function StatCard({ src, alt, delay = 0, className = '' }) {
       <div className="absolute inset-0 pointer-events-none opacity-20"
         style={{ backgroundImage: 'repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,240,0.015) 3px,rgba(0,255,240,0.015) 4px)' }} />
 
-      <div className="p-4 flex items-center justify-center">
-        <img
-          src={src}
-          alt={alt}
-          loading="lazy"
-          className="w-full h-auto rounded"
-          style={{ maxWidth: '100%', imageRendering: 'auto' }}
-        />
+      <div className="p-4 flex items-center justify-center min-h-[200px]">
+        {imageLoading && !imageError && (
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" 
+              style={{ borderColor: '#00fff0', borderTopColor: 'transparent' }} />
+            <p className="text-xs opacity-50" style={{ fontFamily: 'Share Tech Mono, monospace', color: '#00fff0' }}>
+              Loading {alt}...
+            </p>
+          </div>
+        )}
+        {imageError && fallbackContent ? (
+          <div className="w-full">
+            {fallbackContent}
+          </div>
+        ) : imageError ? (
+          <div className="text-center p-6">
+            <p className="text-xs opacity-70 mb-2" style={{ fontFamily: 'Share Tech Mono, monospace', color: '#ff6b6b' }}>
+              ⚠ Unable to load {alt}
+            </p>
+            <p className="text-[10px] opacity-40 mb-3" style={{ fontFamily: 'Share Tech Mono, monospace' }}>
+              Stats service temporarily unavailable
+            </p>
+            <a href={`https://github.com/${USERNAME}`} target="_blank" rel="noopener noreferrer"
+              className="inline-block text-[10px] px-3 py-1.5 rounded hover:opacity-80 transition-opacity"
+              style={{ fontFamily: 'Orbitron, monospace', background: 'rgba(0,255,240,0.1)', border: '1px solid rgba(0,255,240,0.3)', color: '#00fff0' }}>
+              View on GitHub →
+            </a>
+          </div>
+        ) : null}
+        {imgSrc && (
+          <img
+            src={imgSrc}
+            alt={alt}
+            loading="lazy"
+            className="w-full h-auto rounded"
+            style={{ 
+              maxWidth: '100%', 
+              imageRendering: 'auto',
+              display: imageError ? 'none' : 'block'
+            }}
+            onLoad={() => setImageLoading(false)}
+            onError={() => {
+              setImageError(true);
+              setImageLoading(false);
+            }}
+          />
+        )}
       </div>
     </motion.div>
   );
 }
 
 export default function GitHubStatsSection({ sectionRef }) {
+  const statsUrl = `https://github-readme-stats-sigma-five.vercel.app/api?username=${USERNAME}&show_icons=true&count_private=true&include_all_commits=true&bg_color=020408&border_color=00fff030&title_color=00fff0&text_color=a0c4d4&icon_color=00fff0&hide_border=false`;
+  const langsUrl = `https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=${USERNAME}&layout=compact&bg_color=020408&border_color=00fff030&title_color=00fff0&text_color=a0c4d4&hide_border=false&langs_count=8&card_width=320`;
+  const streakUrl = `https://streak-stats.demolab.com?user=${USERNAME}&background=020408&border=00fff030&ring=00fff0&fire=ff00aa&currStreakLabel=00fff0&sideNums=ffffff&sideLabels=a0c4d4&dates=607080`;
+
+  // Fallback content for stats cards
+  const statsFallback = (
+    <div className="text-center p-6">
+      <p className="text-sm font-bold mb-3" style={{ fontFamily: 'Orbitron, monospace', color: '#00fff0' }}>
+        GitHub Statistics
+      </p>
+      <div className="space-y-2 text-xs" style={{ fontFamily: 'Share Tech Mono, monospace' }}>
+        <p className="opacity-70">Profile: <span className="text-cyan-400">@{USERNAME}</span></p>
+        <p className="opacity-70">View full stats on GitHub</p>
+      </div>
+      <a href={`https://github.com/${USERNAME}`} target="_blank" rel="noopener noreferrer"
+        className="inline-block mt-4 text-[10px] px-4 py-2 rounded hover:opacity-80 transition-opacity"
+        style={{ fontFamily: 'Orbitron, monospace', background: 'rgba(0,255,240,0.1)', border: '1px solid rgba(0,255,240,0.3)', color: '#00fff0' }}>
+        Visit GitHub Profile →
+      </a>
+    </div>
+  );
+
+  const langsFallback = (
+    <div className="text-center p-6">
+      <p className="text-sm font-bold mb-3" style={{ fontFamily: 'Orbitron, monospace', color: '#00fff0' }}>
+        Top Languages
+      </p>
+      <div className="space-y-2 text-xs" style={{ fontFamily: 'Share Tech Mono, monospace', color: '#a0c4d4' }}>
+        <p>JavaScript / TypeScript</p>
+        <p>Python</p>
+        <p>C / C++</p>
+        <p>Java</p>
+      </div>
+    </div>
+  );
+
+  const streakFallback = (
+    <div className="text-center p-6">
+      <p className="text-sm font-bold mb-3" style={{ fontFamily: 'Orbitron, monospace', color: '#00fff0' }}>
+        GitHub Streak
+      </p>
+      <p className="text-xs opacity-70" style={{ fontFamily: 'Share Tech Mono, monospace' }}>
+        Active contributor on GitHub
+      </p>
+    </div>
+  );
+
   return (
     <motion.section
       ref={sectionRef}
@@ -86,6 +179,7 @@ export default function GitHubStatsSection({ sectionRef }) {
           src={statsUrl}
           alt="GitHub Stats"
           delay={0}
+          fallbackContent={statsFallback}
         />
 
         {/* Top Languages */}
@@ -93,6 +187,7 @@ export default function GitHubStatsSection({ sectionRef }) {
           src={langsUrl}
           alt="Top Languages"
           delay={0.1}
+          fallbackContent={langsFallback}
         />
 
         {/* Streak — full width */}
@@ -101,6 +196,7 @@ export default function GitHubStatsSection({ sectionRef }) {
           alt="GitHub Streak"
           delay={0.2}
           className="md:col-span-2"
+          fallbackContent={streakFallback}
         />
       </div>
 

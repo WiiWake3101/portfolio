@@ -81,7 +81,7 @@ export default function BootScreen() {
           {/* Terminal card */}
           <div
             className="relative w-full max-w-xl mx-4 rounded-xl overflow-hidden"
-            style={{ background: 'rgba(2,4,10,0.97)', border: '1px solid rgba(0,255,240,0.2)' }}
+            style={{ background: 'rgba(2,4,10,0.97)', border: '1px solid rgba(0,255,240,0.2)', maxHeight: '90vh' }}
           >
             {/* Top bar */}
             <div className="h-0.5" style={{ background: 'linear-gradient(90deg, #00fff0, #0066ff, #ff00aa)', boxShadow: '0 0 12px #00fff0' }} />
@@ -91,17 +91,17 @@ export default function BootScreen() {
               {['#ff5f56', '#ffbd2e', '#27c93f'].map((c, i) => (
                 <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ background: c }} />
               ))}
-              <span className="ml-2 text-[10px] tracking-widest opacity-40"
+              <span className="ml-2 text-[10px] tracking-widest opacity-40 truncate"
                 style={{ fontFamily: 'Share Tech Mono, monospace', color: '#00fff0' }}>
-                VIVEK_MG_PORTFOLIO — BOOT_SEQUENCE.SH
+                VIVEK_MG — BOOT.SH
               </span>
             </div>
 
             {/* Terminal body */}
-            <div className="p-6 min-h-[200px]">
+            <div className="p-4 sm:p-6 min-h-[200px] max-h-[calc(90vh-80px)] overflow-y-auto">
               {/* ASCII logo */}
               <pre
-                className="text-[10px] mb-5 opacity-60 leading-tight"
+                className="text-[6px] sm:text-[8px] md:text-[10px] mb-3 sm:mb-5 opacity-60 leading-tight hidden sm:block"
                 style={{ fontFamily: 'Share Tech Mono, monospace', color: '#00fff0' }}
               >
 {`
@@ -114,15 +114,25 @@ export default function BootScreen() {
 `}
               </pre>
 
+              {/* Mobile simplified header */}
+              <div className="sm:hidden mb-4 text-center">
+                <div className="text-lg font-bold" style={{ fontFamily: 'Orbitron, monospace', color: '#00fff0', textShadow: '0 0 10px rgba(0,255,240,0.6)' }}>
+                  VIVEK M G
+                </div>
+                <div className="text-[9px] opacity-50 tracking-widest mt-1" style={{ fontFamily: 'Share Tech Mono, monospace', color: '#00fff0' }}>
+                  PORTFOLIO SYSTEM
+                </div>
+              </div>
+
               {/* Boot lines */}
-              <div className="flex flex-col gap-1.5">
+              <div className="flex flex-col gap-1 sm:gap-1.5">
                 {lines.map((line, idx) => (
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="text-xs"
+                    className="text-[10px] sm:text-xs break-words"
                     style={{
                       fontFamily: 'Share Tech Mono, monospace',
                       color: line.includes('WELCOME') ? '#00ff88' : '#00fff0',
@@ -138,7 +148,7 @@ export default function BootScreen() {
                   <motion.span
                     animate={{ opacity: [1, 0] }}
                     transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
-                    className="inline-block w-2 h-3.5 align-middle"
+                    className="inline-block w-1.5 sm:w-2 h-3 sm:h-3.5 align-middle"
                     style={{ background: '#00fff0', boxShadow: '0 0 6px #00fff0' }}
                   />
                 )}

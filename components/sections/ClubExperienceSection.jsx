@@ -6,14 +6,14 @@ const clubRoles = [
   {
     title: 'Creatives Head',
     rank: '01',
-    period: 'Jul 2025 – Present',
-    duration: '7 months',
+    period: 'Jul 2025 – May 2026',
+    duration: '11 months',
     type: 'Full-time',
     location: 'Chennai, Tamil Nadu, India',
     description:
-      'Leading the Design, Content, and VFX efforts for all club initiatives. Head of the Organising committee of AlexaVerse 2.0.',
+      'Led the Design, Content, and VFX efforts for all club initiatives. Head of the Organising committee of AlexaVerse 2.0.',
     skills: ['Team Leadership', 'Event Management', 'Design Direction', 'VFX'],
-    isCurrent: true,
+    isCurrent: false,
     accentColor: '#00fff0',
     accentGlow: 'rgba(0,255,240,0.15)',
   },
@@ -106,7 +106,7 @@ export default function ClubExperienceSection() {
               </h3>
               <p className="text-xs tracking-widest opacity-50"
                 style={{ fontFamily:'Share Tech Mono, monospace' }}>
-                TOTAL_EXP :: 2 YRS 5 MOS
+                TOTAL_EXP :: 2 YRS 1 MO
               </p>
             </div>
             <div className="flex-shrink-0 text-right" style={{ fontFamily:'Share Tech Mono, monospace' }}>
