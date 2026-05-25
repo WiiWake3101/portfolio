@@ -1,7 +1,7 @@
 'use client';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+
 
 const GitHubIcon = () => (
   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
@@ -19,8 +19,8 @@ const corners = [
 const undergraduateProjects = [
   {
     image: '/major_project.jpg',
-    video: '/major_project.mp4',
-    hasMedia: true, // Flag to show media switcher
+    videoLink: 'https://1drv.ms/v/c/5c414ee5794ec5d0/IQA3UiS7LonoTKElVEtjnmOvAe9wgvPYxftMk2T5fo3i52Q?e=Mk7a0S',
+    hasMedia: true, // Flag to show video link button
     duration: 'Dec 2025 – Apr 2026',
     type: 'Undergraduate',
     title: 'Integrating IoT Health Monitoring Devices in Automotive Vehicles',
@@ -169,26 +169,6 @@ function SubHeading({ label, comment }) {
 
 // Media display component with photo/video toggle
 function ProjectMedia({ project, idx }) {
-  const [showVideo, setShowVideo] = useState(false);
-
-  // Auto-swap: Start with photo for 5 seconds, then show video
-  useEffect(() => {
-    if (!project.hasMedia) return;
-
-    // If showing photo, switch to video after 5 seconds
-    if (!showVideo) {
-      const timer = setTimeout(() => {
-        setShowVideo(true);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [showVideo, project.hasMedia]);
-
-  // Handle video end - switch back to photo (which will trigger auto-swap again)
-  const handleVideoEnd = () => {
-    setShowVideo(false);
-  };
-
   return (
     <div className="flex-shrink-0 flex justify-center items-center p-5 md:p-6 w-full md:w-[420px] relative z-10">
       <motion.div
@@ -197,95 +177,41 @@ function ProjectMedia({ project, idx }) {
         className="relative rounded-xl overflow-hidden w-full"
         style={{ border: `1px solid ${project.accent}25`, boxShadow: `0 0 20px ${project.accent}15` }}
       >
-        {/* Media switcher buttons */}
-        {project.hasMedia && (
-          <div className="absolute top-3 right-3 z-20 flex gap-2">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setShowVideo(false)}
-              className={`px-3 py-1.5 rounded text-[9px] font-bold tracking-widest transition-all ${
-                !showVideo ? 'opacity-100' : 'opacity-40'
-              }`}
-              style={{
-                fontFamily: 'Orbitron, monospace',
-                background: !showVideo ? `${project.accent}25` : 'rgba(0,0,0,0.7)',
-                border: `1px solid ${!showVideo ? project.accent : 'rgba(255,255,255,0.2)'}`,
-                color: !showVideo ? project.accent : '#fff',
-                boxShadow: !showVideo ? `0 0 12px ${project.accent}40` : 'none',
-              }}
-            >
-              PHOTO
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setShowVideo(true)}
-              className={`px-3 py-1.5 rounded text-[9px] font-bold tracking-widest transition-all ${
-                showVideo ? 'opacity-100' : 'opacity-40'
-              }`}
-              style={{
-                fontFamily: 'Orbitron, monospace',
-                background: showVideo ? `${project.accent}25` : 'rgba(0,0,0,0.7)',
-                border: `1px solid ${showVideo ? project.accent : 'rgba(255,255,255,0.2)'}`,
-                color: showVideo ? project.accent : '#fff',
-                boxShadow: showVideo ? `0 0 12px ${project.accent}40` : 'none',
-              }}
-            >
-              VIDEO
-            </motion.button>
-          </div>
+        {/* Watch Video button */}
+        {project.videoLink && (
+          <motion.a
+            href={project.videoLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="absolute top-3 right-3 z-20 px-3 py-1.5 rounded text-[9px] font-bold tracking-widest"
+            style={{
+              fontFamily: 'Orbitron, monospace',
+              background: `${project.accent}25`,
+              border: `1px solid ${project.accent}`,
+              color: project.accent,
+              boxShadow: `0 0 12px ${project.accent}40`,
+            }}
+          >
+            ▶ WATCH VIDEO
+          </motion.a>
         )}
 
-        {/* Carousel-style display with fade transitions */}
-        <AnimatePresence mode="wait">
-          {showVideo && project.video ? (
-            <motion.div
-              key="video"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="relative w-full"
-              style={{ aspectRatio: '16/9' }}
-            >
-              <video
-                src={project.video}
-                controls
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-full object-cover rounded-lg"
-                style={{ background: '#000' }}
-              >
-                Your browser does not support the video tag.
-              </video>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="image"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="relative"
-            >
-            
-            <Image
-                src={project.image}
-                alt={project.title}
-                width={600}
-                height={400}
-                className="w-full h-auto object-cover rounded-lg"
-                unoptimized
-            /> 
-              {/* Image overlay tint */}
-              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500"
-                style={{ background: `linear-gradient(135deg, ${project.accent}08, transparent)` }} />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="relative">
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={600}
+            height={400}
+            className="w-full h-auto object-cover rounded-lg"
+            unoptimized
+            priority={idx === 0}
+          /> 
+          {/* Image overlay tint */}
+          <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500"
+            style={{ background: `linear-gradient(135deg, ${project.accent}08, transparent)` }} />
+        </div>
       </motion.div>
     </div>
   );
